@@ -5,10 +5,10 @@ public class App {
     // Replace server name, username, and password with your credentials
     public static void main(String[] args) {
         String connectionUrl =
-                "jdbc:sqlserver://yourserver.database.windows.net:1433;"
-                        + "database=AdventureWorks;"
-                        + "user=yourusername@yourserver;"
-                        + "password=yourpassword;"
+                "jdbc:sqlserver://localhost:3306;"
+                        + "database=Lab 1;"
+                        + "user=root@localhost;"
+                        + "password=Ltz7ZC366BPt4MZ;" //Ltz7ZC366BPt4MZ
                         + "encrypt=true;"
                         + "trustServerCertificate=false;"
                         + "loginTimeout=30;";
