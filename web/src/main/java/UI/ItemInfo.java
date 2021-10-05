@@ -12,7 +12,7 @@ public class ItemInfo extends Controller.Item {
         super(id, name, price, description, quantity, category, pictureUrl);
     }
 
-    public ItemInfo(int id, String name, double price, Category category, pictureUrl) {
+    public ItemInfo(int id, String name, double price, Category category,String pictureUrl) {
         super(id, name, price, category, pictureUrl);
     }
 

@@ -60,7 +60,8 @@ public class OrderDB extends Controller.Order {
                 double price = rs.getDouble("price");
                 String categoryString = rs.getString("category");
                 Category category = Category.valueOf(categoryString);
-                order.items.add(new ItemDB(id, name, price, description, quantity, category));
+                String pictureUrl = rs.getString("url");
+                order.items.add(new ItemDB(id, name, price, description, quantity, category, pictureUrl));
             }
 
         } catch (SQLException e) {

@@ -17,7 +17,7 @@ public class App {
         ArrayList<ItemInfo> items = new ArrayList<>();
         for (Iterator it = c.iterator(); it.hasNext();) {
             Item item = (Item) it.next();
-            items.add(new ItemInfo(item.getId(), item.getName(), item.getPrice(), item.getDescription(), item.getQuantity(), item.getCategory()));
+            items.add(new ItemInfo(item.getId(), item.getName(), item.getPrice(), item.getDescription(), item.getQuantity(), item.getCategory(), item.getPictureUrl()));
             System.out.println(item.getName());
         }
     }
