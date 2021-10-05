@@ -1,5 +1,6 @@
-package DB;
+package Controller;
 
+import Controller.DBManager;
 import Controller.Category;
 import Controller.Item;
 import java.sql.Connection;

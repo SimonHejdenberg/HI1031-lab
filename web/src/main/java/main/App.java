@@ -8,6 +8,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
+/*
+
+    NOTES
+Om vi ska följa MVC så måste vi flytta en del grejer som ligger i Controllern och lägga dem i Model.
+
+*/
+
 public class App {
 
     // Connect to your database.

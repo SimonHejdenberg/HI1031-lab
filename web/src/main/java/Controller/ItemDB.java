@@ -1,5 +1,6 @@
-package DB;
+package Controller;
 
+import Controller.DBManager;
 import Controller.*;
 import java.sql.*;
 import java.util.*;
