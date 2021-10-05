@@ -17,20 +17,22 @@ public class Item {
     public Category category;
     public String pictureUrl;
 
-    protected Item(int id, String name, double price, String description, int quantity, Category category) {
+    protected Item(int id, String name, double price, String description, int quantity, Category category, String pictureUrl) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.description = description;
         this.quantity = quantity;
         this.category = category;
+        this.pictureUrl = pictureUrl;
     }
 
-    protected Item(int id, String name, double price, Category category) {
+    protected Item(int id, String name, double price, Category category, String pictureUrl) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.category = category;
+        this.pictureUrl = pictureUrl;
     }
 
     public static Collection getItems() {

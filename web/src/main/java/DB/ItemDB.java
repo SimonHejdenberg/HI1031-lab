@@ -10,19 +10,19 @@ import java.util.*;
  */
 public class ItemDB extends Controller.Item {
 
-    public ItemDB(int id, String name, double price, String description, int quantity, Category category) {
-        super(id, name, price, description, quantity, category);
+    public ItemDB(int id, String name, double price, String description, int quantity, Category category, String pictureUrl) {
+        super(id, name, price, description, quantity, category, pictureUrl);
     }
 
-    public ItemDB(int id, String name, double price, Category category) {
-        super(id, name, price, category);
+    public ItemDB(int id, String name, double price, Category category, String pictureUrl) {
+        super(id, name, price, category, pictureUrl);
     }
 
     public static Collection getAllItems() {
         ArrayList<ItemDB> items = new ArrayList<ItemDB>();
-        try{
+        try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch(ClassNotFoundException e){
+        } catch (ClassNotFoundException e) {
             System.out.println("Class not found " + e.getMessage());
             e.printStackTrace();
         }
@@ -39,7 +39,7 @@ public class ItemDB extends Controller.Item {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-       
+
         return items;
     }
 
@@ -100,8 +100,9 @@ public class ItemDB extends Controller.Item {
             double price = rs.getDouble("price");
             String categoryString = rs.getString("category");
             Category category = Category.valueOf(categoryString);
+            String pictureURL = rs.getString("pictureurl");
             System.out.println(name);
-            items.add(new ItemDB(id, name, price, description, quantity, category));
+            items.add(new ItemDB(id, name, price, description, quantity, category, pictureURL));
         }
         return items;
     }
@@ -110,13 +111,14 @@ public class ItemDB extends Controller.Item {
         int returnID = -1;
         try {
             Connection con = DBManager.getConnection();
-            String sql = "INSERT INTO T_ITEM(name, price, description, quantity, category) VALUES(?,?,?,?,?)";
+            String sql = "INSERT INTO T_ITEM(name, price, description, quantity, category,url) VALUES(?,?,?,?,?,?)";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, item.getName());
             stmt.setDouble(2, item.getPrice());
             stmt.setString(3, item.getDescription());
             stmt.setInt(4, item.getQuantity());
             stmt.setString(5, item.getCategory().toString());
+            stmt.setString(6, item.getPictureUrl());
             returnID = stmt.executeUpdate();
 
         } catch (SQLException e) {
