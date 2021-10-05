@@ -13,33 +13,26 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="css/main.css" type="text/css"/>
         <title>Stock</title>
     </head>
     <body>
+        <div class="flex-container">
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Price</th>
-                </tr>
-            </thead>
             <% Collection<ItemInfo> items = ItemHandler.getItems();
                 Iterator<ItemInfo> it = items.iterator();
                 for (; it.hasNext();) {
                     ItemInfo item = it.next();%>
-            <tbody>
-                <tr>
-                    <td> <%=item.getName()%></td>
-                    <td> <%=item.getDescription()%></td>
-                    <td> <%=item.getPrice()%></td>
-                </tr>
-            </tbody>
-        </table>
+            <div class="grid-item">
+                <p> <%=item.getName()%></p>
+                <p><%=item.getDescription()%></p>
+                <p> <%=item.getPrice()%></p>
+            </div>
+            <% }%>
 
-        <br>
-        <% }%>
+        </div>
+
+
 
     </body>
 </html>

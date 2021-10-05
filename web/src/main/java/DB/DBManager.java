@@ -33,7 +33,6 @@ public class DBManager {
             System.out.println(e.getMessage());
             System.out.println(e.getSQLState());
             System.out.println(e.getErrorCode());
-
         }
     }
 

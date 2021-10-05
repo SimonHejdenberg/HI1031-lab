@@ -15,6 +15,7 @@ public class Item {
     public String description;
     public int quantity;
     public Category category;
+    public String pictureUrl;
 
     protected Item(int id, String name, double price, String description, int quantity, Category category) {
         this.id = id;
@@ -82,6 +83,14 @@ public class Item {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public String getPictureUrl() {
+        return pictureUrl;
+    }
+
+    public void setPictureUrl(String pictureUrl) {
+        this.pictureUrl = pictureUrl;
     }
 
 }
