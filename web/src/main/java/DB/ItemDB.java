@@ -100,7 +100,7 @@ public class ItemDB extends Controller.Item {
             double price = rs.getDouble("price");
             String categoryString = rs.getString("category");
             Category category = Category.valueOf(categoryString);
-            String pictureURL = rs.getString("pictureurl");
+            String pictureURL = rs.getString("url");
             System.out.println(name);
             items.add(new ItemDB(id, name, price, description, quantity, category, pictureURL));
         }

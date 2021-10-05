@@ -48,11 +48,11 @@ public class OrderDB extends Controller.Order {
         try {
 
             //behöver dubbla SQL statements, pga koppling Order - Item
+            
             Connection con = DBManager.getConnection();
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT 1 FROM T_ORDEROVERVIEW WHERE OrderID = " + orderID);
             while (rs.next()) {
-
                 int id = rs.getInt("id");
                 String name = rs.getString("name");
                 String description = rs.getString("description");
