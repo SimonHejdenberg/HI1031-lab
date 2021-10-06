@@ -5,7 +5,7 @@
 --%>
 
 <%@page import="java.util.Iterator"%>
-<%@page import="Controller.ItemHandler"%>
+<%@page import="Logic.ItemHandler"%>
 <%@page import="UI.ItemInfo"%>
 <%@page import="java.util.Collection"%>
 <%@page contentType="text/html" pageEncoding="UTF-8" language="java"%>
@@ -15,10 +15,11 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="css/main.css" type="text/css"/>  
         <%String username;%>
-        <%if (session.isNew()) {
-                username = (String) session.getAttribute("username");
-            } else {
+
+        <%if (session.getAttribute("username") == null) {
                 username = "New User";
+            } else {
+                username = (String) session.getAttribute("username");
             }%>
         <title> Webshop </title>
     </head>
@@ -28,7 +29,6 @@
         </div>
         <div class="main">
             <p>Welcome <%=username%></p>
-                     
             <div class="flex-container">
                 <% Collection<ItemInfo> items = ItemHandler.getItems();
                     Iterator<ItemInfo> it = items.iterator();
@@ -41,7 +41,6 @@
                     <p> <%=item.getPrice()%></p>
                 </div>
                 <% }%>
-
             </div>
         </div>
 

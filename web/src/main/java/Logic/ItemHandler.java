@@ -1,4 +1,4 @@
-package Controller;
+package Logic;
 
 import UI.ItemInfo;
 import java.util.ArrayList;
@@ -21,5 +21,7 @@ public class ItemHandler {
         }
         return items;
     }
+    
+    
 
 }

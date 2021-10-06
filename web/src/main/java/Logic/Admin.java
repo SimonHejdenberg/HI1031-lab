@@ -3,14 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Model;
+package Logic;
 
 /**
  *
  * @author simon
  */
-public class Staff extends User{
-    public Staff(int userID, String firstname, String lastname, String username, String password, Enum seclevel){
+public class Admin extends User{
+    
+    public Admin(int userID, String firstname, String lastname, String username, String password, Enum seclevel){
         super(userID, firstname, lastname, username, password, seclevel);
     }
+    
+    
 }

@@ -1,5 +1,6 @@
-package Controller;
+package Logic;
 
+import DataLayer.ItemDB;
 import java.util.Collection;
 
 /**

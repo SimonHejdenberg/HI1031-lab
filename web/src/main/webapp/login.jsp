@@ -25,11 +25,11 @@
                             <a href="signup.jsp"> <button type="button" name="signup">Sign up here</button></a>
                         </td>
                         <td>
-                             <input type="submit" value="Login" />  
+                            <input type="submit" value="Login" /> 
                         </td>
                     </tr>
                 </table>
-               </form>
+            </form>
         </div>
 
         <div class="footer">

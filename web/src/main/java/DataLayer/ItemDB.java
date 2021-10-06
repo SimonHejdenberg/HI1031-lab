@@ -1,7 +1,8 @@
-package Controller;
+package DataLayer;
 
-import Controller.DBManager;
-import Controller.*;
+import Logic.Category;
+import DataLayer.DBManager;
+import Logic.Item;
 import java.sql.*;
 import java.util.*;
 
@@ -9,7 +10,7 @@ import java.util.*;
  *
  * @author jemsann
  */
-public class ItemDB extends Controller.Item {
+public class ItemDB extends Logic.Item {
 
     public ItemDB(int id, String name, double price, String description, int quantity, Category category, String pictureUrl) {
         super(id, name, price, description, quantity, category, pictureUrl);

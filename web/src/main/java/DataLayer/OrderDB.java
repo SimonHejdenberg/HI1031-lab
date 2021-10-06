@@ -1,8 +1,9 @@
-package Controller;
+package DataLayer;
 
-import Controller.DBManager;
-import Controller.Category;
-import Controller.Item;
+import DataLayer.DBManager;
+import Logic.Category;
+import Logic.Category;
+import Logic.Item;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -17,7 +18,7 @@ import java.util.Collection;
  *
  * @author jemsann
  */
-public class OrderDB extends Controller.Order {
+public class OrderDB extends Logic.Order {
 
     private OrderDB(int id, LocalDate orderDate, ArrayList<ItemDB> items) {
         super(id, orderDate, items);

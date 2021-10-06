@@ -1,7 +1,7 @@
 package main;
 
 //package web.src.main.java;
-import Controller.Item;
+import Logic.Item;
 import UI.ItemInfo;
 import java.sql.*;
 import java.util.ArrayList;
