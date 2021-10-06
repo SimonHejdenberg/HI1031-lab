@@ -68,7 +68,7 @@ public class OrderDB extends Controller.Order {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return order != null ? order : null;
+        return order.items != null ? order : null;
     }
 
     private static LocalDate convertToLocalDate(Date date) {

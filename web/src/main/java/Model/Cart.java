@@ -40,7 +40,7 @@ public class Cart implements Cloneable{
         Iterator it = contents.iterator();
         Item item;
         while (it.hasNext()) {
-            item = (Item) it.next();    // varför ger den objekt här utan konvertering?
+            item = (Item) it.next();    // varför ger den objekt här utan konvertering? Generellt iterator, inte item specifikt
             if (item.id == selectedItem.id) {
                 if (item.quantity - selectedItem.quantity <= 0) {
                     it.remove();

@@ -5,27 +5,34 @@
  */
 package Model;
 
-
 /**
  *
  * @author simon
  */
 public class User {
-    
+
     private int userID = -1;    //????????
-    private String firstname, lastname, username, password;  // password plaintext?
+    private String firstname, lastname, username, password;  // password HASHning mot DB, dvs vi tar psw, kör hash funktin, skickar hash till DB?
     private Enum seclevel = null;   //kanske inte funkar med enums i sql. DOCK så har mysql en enumtyp https://dev.mysql.com/doc/refman/8.0/en/enum.html
 
-    public User(int userID, String firstname, String lastname, String username, String password, Enum seclevel){
+    public User(int userID, String firstname, String lastname, String username, String password, Enum seclevel) {
         this.userID = userID;
         this.firstname = firstname;
-        this.firstname = lastname;
-        this.firstname = username;
-        this.firstname = password;
+        this.lastname = lastname;
+        this.username = username;
+        this.password = password;
         this.seclevel = seclevel;
-        
+
         //inga getters eller setters för psw eller seclevel
-        
+    }
+
+    public User() {
+    }
+    
+    
+
+    public boolean validateUser(String username, String password) {
+        return true;
     }
 
     /**
@@ -41,7 +48,7 @@ public class User {
         }
         return -1;
     }
-    
+
     /**
      * @return the firstname
      */
@@ -59,12 +66,10 @@ public class User {
     public String getUsername() {
         return username;
     }
-    
-    
+
     // OBS INGEN GETTER FÖR PSW ELLER SECLEVEL
-    
     @Override
-    public String toString(){
+    public String toString() {
         StringBuilder sb = new StringBuilder();
         return sb.toString();
     }

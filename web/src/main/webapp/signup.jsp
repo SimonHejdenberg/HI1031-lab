@@ -12,7 +12,7 @@
         <div class="main">
             <h1>User Register Form</h1>
             <form action="user_register" method="post">
-                <table style="with: 20%">
+                <table style="width: 20%">
                     <tr>
                         <td>First Name</td>
                         <td><input type="text" name="first_name" /></td>
