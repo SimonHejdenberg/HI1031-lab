@@ -1,8 +1,8 @@
 package DataLayer;
 
 import DataLayer.DBManager;
-import Logic.Category;
-import Logic.Category;
+import Enums.Category;
+import Enums.Category;
 import Logic.Item;
 import java.sql.Connection;
 import java.sql.Date;

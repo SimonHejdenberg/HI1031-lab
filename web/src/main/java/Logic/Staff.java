@@ -10,7 +10,7 @@ package Logic;
  * @author simon
  */
 public class Staff extends User{
-    public Staff(int userID, String firstname, String lastname, String username, String password, Enum seclevel){
-        super(userID, firstname, lastname, username, password, seclevel);
+    public Staff(String firstname, String lastname, String username, String password, Enum seclevel){
+        super(firstname, lastname, username, password, seclevel);
     }
 }

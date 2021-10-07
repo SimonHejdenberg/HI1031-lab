@@ -1,3 +1,5 @@
+<%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" errorPage="error.jsp"%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -9,6 +11,8 @@
         <div class="header">
             <%@ include  file="html/header.html" %>
         </div>
+
+
         <div class="main">
             <h1>User Register Form</h1>
             <form action="user_register" method="post">
@@ -16,6 +20,7 @@
                     <tr>
                         <td>First Name</td>
                         <td><input type="text" name="first_name" /></td>
+                        <td>  </td>
                     </tr>
                     <tr>
                         <td>Last Name</td>
@@ -30,12 +35,12 @@
                         <td><input type="password" name="password" /></td>
                     </tr>
                     <tr>
-                        <td>Address</td>
-                        <td><input type="text" name="address" /></td>
+                        <td>Email</td>
+                        <td><input type="text" name="email" /></td>
                     </tr>
                 </table>
+                <span class="error" style="color:red">${messages.userID}</span>
                 <input type="submit" value="Submit" /></form>
-            
         </div>
 
         <div class="footer">

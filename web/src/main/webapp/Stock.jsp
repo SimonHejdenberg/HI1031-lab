@@ -15,11 +15,10 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="css/main.css" type="text/css"/>  
         <%String username;%>
-
-        <%if (session.getAttribute("username") == null) {
+        <%if(session.getAttribute("username") == null) {
                 username = "New User";
             } else {
-                username = (String) session.getAttribute("username");
+                username = (String) session.getAttribute("username").toString();
             }%>
         <title> Webshop </title>
     </head>
@@ -35,12 +34,12 @@
                     for (; it.hasNext();) {
                         ItemInfo item = it.next();%>
                 <div class="grid-item">
-                    <img max-height="50" max-width="50" src="pictures/<%=item.getPictureUrl()%>" />
+                    <img height="50" width="50" src="pictures/ <%=item.getPictureUrl() %>" />
                     <p> <%=item.getName()%></p>
                     <p><%=item.getDescription()%></p>
                     <p> <%=item.getPrice()%></p>
                 </div>
-                <% }%>
+                <%}%>
             </div>
         </div>
 

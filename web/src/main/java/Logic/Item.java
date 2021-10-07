@@ -1,5 +1,6 @@
 package Logic;
 
+import Enums.Category;
 import DataLayer.ItemDB;
 import java.util.Collection;
 

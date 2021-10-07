@@ -6,7 +6,7 @@
 package DataLayer;
 
 import Logic.Cart;
-import Logic.Category;
+import Enums.Category;
 import Logic.User;
 import Logic.Item;
 import Logic.ModelOrder;

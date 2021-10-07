@@ -1,6 +1,6 @@
 package UI;
 
-import Logic.Category;
+import Enums.Category;
 
 /**
  *

@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Logic;
+package Enums;
 
 /**
  *
  * @author jemsann
  */
-public enum Category {
-    Android,B,C,D,E,F;
+public enum SecurityLevel {
+    Customer, Staff, Admin;
 }
