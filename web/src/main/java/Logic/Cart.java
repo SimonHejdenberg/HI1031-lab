@@ -14,11 +14,44 @@ import java.util.LinkedList;
  */
 public class Cart implements Cloneable{
     
-    private final int userID;
-    private final LinkedList<Item> contents = new LinkedList<>();
+    private final User user;
+    private LinkedList<Item> contents;
     
-    public Cart(int userID){
-        this.userID = userID;
+    public Cart(User user){
+        this.user = user;
+        this.contents = new LinkedList<>();
+    }
+    
+    public Cart(User user, LinkedList<Item> contents){
+        this.user = user;
+        this.contents = contents;
+    }
+    
+    public Cart(Cart cart){
+        this.user = cart.getUser();
+        this.contents = cart.getContents();
+    }
+
+    /**
+     * @return the user
+     */
+    public User getUser() {
+        return user;
+    }
+
+    /**
+     * @return the contents
+     */
+    public LinkedList<Item> getContents() {
+        return contents;
+    }
+    
+    public LinkedList<Item> getContentsCopy() {
+        LinkedList<Item> contentsCopy = new LinkedList<>();
+        for (Item content : contents) {
+            contentsCopy.add(content);
+        }
+        return contentsCopy;
     }
     
     public ModelOrder convertIntoOrder() throws CloneNotSupportedException{
@@ -26,39 +59,39 @@ public class Cart implements Cloneable{
     }
     
     public void addItem(Item newItem){  //rätt sätt att använda quantity?
-        for (Item content : contents) {
-            if (content.id == newItem.id) {
-                content.quantity += newItem.quantity;
-                return;
-            }
-        }
-        contents.add(newItem);
+//        for (Item content : getContents()) {
+//            if (content.id == newItem.id) {
+//                content.quantity += newItem.quantity;
+//                return;
+//            }
+//        }
+//        getContents().add(newItem);
     }
     
     public void removeItem(Item selectedItem){  //rätt sätt att använda quantity?
-        Iterator it = contents.iterator();
-        Item item;
-        while (it.hasNext()) {
-            item = (Item) it.next();    // varför ger den objekt här utan konvertering? Generellt iterator, inte item specifikt
-            if (item.id == selectedItem.id) {
-                if (item.quantity - selectedItem.quantity <= 0) {
-                    it.remove();
-                    return;
-                } else {
-                    item.quantity -= selectedItem.quantity;
-                    return;
-                }
-            }
-            
-        }
+//        Iterator it = getContents().iterator();
+//        Item item;
+//        while (it.hasNext()) {
+//            item = (Item) it.next();    // varför ger den objekt här utan konvertering? Generellt iterator, inte item specifikt
+//            if (item.id == selectedItem.id) {
+//                if (item.quantity - selectedItem.quantity <= 0) {
+//                    it.remove();
+//                    return;
+//                } else {
+//                    item.quantity -= selectedItem.quantity;
+//                    return;
+//                }
+//            }
+//            
+//        }
     }
     
     @Override
     public String toString(){
         StringBuilder sb = new StringBuilder();
         try {
-            while (contents.iterator().hasNext()) {
-                Item item = contents.iterator().next();
+            while (getContents().iterator().hasNext()) {
+                Item item = getContents().iterator().next();
                 sb.append(item.getName()).append(" (x").append(item.quantity).append(")\n");
             }
         } catch (Exception e) {

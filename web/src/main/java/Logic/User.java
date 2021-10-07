@@ -27,9 +27,6 @@ public class User {
 
         //inga getters eller setters för psw eller seclevel
     }
-
-    public User() {
-    }
     
     @Override
     public int hashCode() {

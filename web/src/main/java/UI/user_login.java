@@ -52,7 +52,7 @@ public class user_login extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        User user = new User();
+        User user = null;   //!!!!!!!!!!!!!!!!!!!!!!!
         boolean status = user.validateUser(username, password);
 
         if (status) {

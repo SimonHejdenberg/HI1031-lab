@@ -38,6 +38,6 @@ public class Customer extends User{
     }
     
     public final void newCart(){
-        cart2 = new Cart(this.getUserID());
+        cart2 = new Cart(this);
     }
 }

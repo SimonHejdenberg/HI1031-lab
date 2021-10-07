@@ -28,4 +28,17 @@ public class App {
             System.out.println(item.getName());
         }
     }
+    /*
+        Cart testCart = new Cart(
+            new User(0, "firstname", "lastname", "username", "password", null), 
+            new LinkedList<Item>(Arrays.asList(new Item(0, "name1", 0, "description", 99, Category.Android, "pictureUrl") {
+            }))
+        );
+        System.out.println(testCart.toString());
+        try {
+            ModelOrder testOrder = testCart.convertIntoOrder();
+            System.out.println(testOrder.toString());
+        } catch (Exception e) {
+        }
+    */
 }
