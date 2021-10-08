@@ -7,46 +7,41 @@
     <head>
         <title>Stock</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="css/main.css" type="text/css"/>
+        <link href="css/main.css" rel="stylesheet" type="text/css"/>     
+        <script src="js/sorttable.js"></script>
     </head>
     <body>
         <div class="header">
             <%@ include  file="html/header.html" %>
         </div>
         <div class="main">
-            <p>Some form of search input here....</p>
-
-
-            <table id="warehouseTable" >
+            <table class="sortable">
                 <thead>
                     <tr>
-                        <td>
+                        <th>
                             Id
-                        </td>
-                        <td>
+                        </th>
+                        <th>
                             Name
-                        </td>
-                        <td>
+                        </th>
+                        <th>
                             Price
-                        </td>
-                        <td>
+                        </th>
+                        <th>
                             Description
-                        </td>
-                        <td>
+                        </th>
+                        <th>
                             Quantity
-                        </td>
-                        <td>
+                        </th>
+                        <th>
                             Category
-                        </td>
-                        <td>
+                        </th>
+                        <th>
                             Picture
-                        </td>
-                        <td>
+                        </th>
+                        <th>
                             Edit
-                        </td> 
-                        <td>
-                            Delete
-                        </td>
+                        </th> 
                     </tr>
                 </thead>
                 <tbody>
@@ -77,18 +72,17 @@
                             <%=product.getPictureUrl()%>
                         </td>
                         <td>
-                            <button class="btn"><i class="fa fa-pencil"></i> Edit</button>
-                        </td>
-                        <td>
-                            <button class="btn"><i class="fa fa-trash"></i> Delete</button>
+                            <form action='product' method='post'>
+                                
+                                <button type="submit" name='editProductBtn' value="<%=product.getId()%>" > <i class="fa fa-pencil"></i> </button>
+                            </form>
+
                         </td>
                     </tr>
                     <%}%>
-                    %>
                 </tbody>
             </table>
         </div>
-
         <div class="footer">
             <%@ include  file="html/footer.html" %>
         </div>

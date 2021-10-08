@@ -34,7 +34,7 @@
                     for (; it.hasNext();) {
                         ItemInfo item = it.next();%>
                 <div class="grid-item">
-                    <img height="50" width="50" src="pictures/ <%=item.getPictureUrl() %>" />
+                    <img width="50" height="50" src="pictures/<%=item.getPictureUrl()%>" />
                     <p> <%=item.getName()%></p>
                     <p><%=item.getDescription()%></p>
                     <p> <%=item.getPrice()%></p>

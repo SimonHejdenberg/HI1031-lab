@@ -27,7 +27,20 @@ and open the template in the editor.
 }
 
 
+table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after { 
+    content: " \25B4\25BE" 
+}
 
+table.sortable tbody tr:nth-child(2n) td {
+  background: #ffcccc;
+}
+table.sortable tbody tr:nth-child(2n+1) td {
+  background: #ccffff;
+}
+
+table, th, td {
+  border: 10px solid red;
+}
 
 .footer-basic {
   padding:40px 0;
