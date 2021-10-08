@@ -55,7 +55,7 @@ public class user_register extends HttpServlet {
         int userID = UserManager.registerNewUser(customer);
         System.out.println("user_register: " + customer.hashCode());
         if (userID > -1) {
-            RequestDispatcher rd = request.getRequestDispatcher("Stock.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("store.jsp");
             request.getSession().setAttribute("username", customer.getUsername());
             rd.forward(request, response);
         } else {

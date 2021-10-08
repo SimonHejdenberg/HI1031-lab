@@ -49,7 +49,7 @@ public class user_login extends HttpServlet {
         boolean status = UserManager.validateUser(user);
         System.out.println("Status " + status);
         if (status) {
-            RequestDispatcher rd = request.getRequestDispatcher("Stock.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("store.jsp");
             request.getSession().setAttribute("username", username);
             rd.forward(request, response);
         } else {
