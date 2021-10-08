@@ -10,7 +10,7 @@
             <%@ include  file="html/header.html" %>
         </div>
         <div class="main">
-            <a href="Stock.jsp">Stock</a>
+            <a href="store.jsp">Go to store</a>
         </div>
 
         <div class="footer">
