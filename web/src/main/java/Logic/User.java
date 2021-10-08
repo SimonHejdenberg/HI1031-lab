@@ -18,6 +18,7 @@ public class User {
     private String firstname, lastname, username, password;  // password HASHning mot DB, dvs vi tar psw, kör hash funktin, skickar hash till DB?
     private Enum seclevel = null;   //kanske inte funkar med enums i sql. DOCK så har mysql en enumtyp https://dev.mysql.com/doc/refman/8.0/en/enum.html
     int hashcode;
+    Cart cart = null;
 
     public User(String firstname, String lastname, String username, String password, Enum seclevel) {
         this.firstname = firstname;
@@ -86,6 +87,13 @@ public class User {
      */
     public String getUsername() {
         return username;
+    }
+    
+    public Cart getCart(){
+        if (cart == null) {
+            cart = new Cart(this);
+        }
+        return cart;
     }
 
     // OBS INGEN GETTER FÖR PSW ELLER SECLEVEL

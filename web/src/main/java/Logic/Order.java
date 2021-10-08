@@ -13,11 +13,19 @@ public class Order {
     public int id;
     public LocalDate orderDate;
     public ArrayList<ItemDB> items;
+    public User user;
 
     protected Order(int id, LocalDate orderDate, ArrayList<ItemDB> items) {
         this.id = id;
         this.orderDate = orderDate;
         this.items = items;
+    }
+    
+    protected Order(User user, int id, Cart cart, LocalDate orderDate) {
+        this.user = user;
+        this.id = id;
+        //this.items =
+        this.orderDate = orderDate;
     }
 
     public Order(int id, LocalDate orderDate) {

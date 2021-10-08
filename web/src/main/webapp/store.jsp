@@ -38,6 +38,7 @@
                     <p> <%=item.getName()%></p>
                     <p><%=item.getDescription()%></p>
                     <p> <%=item.getPrice()%></p>
+                    <input type ="button" height="5" width="6" src="pictures/Cart.jpg"></input>
                 </div>
                 <%}%>
             </div>

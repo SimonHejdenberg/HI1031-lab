@@ -5,8 +5,11 @@
  */
 package Logic;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Map;
 
 /**
  *
@@ -16,10 +19,12 @@ public class Cart implements Cloneable{
     
     private final User user;
     private LinkedList<Item> contents;
+    private Map<Integer, Integer> contMap = null;  //ItemID, amount
     
     public Cart(User user){
         this.user = user;
         this.contents = new LinkedList<>();
+        this.contMap = new HashMap<>();
     }
     
     public Cart(User user, LinkedList<Item> contents){
@@ -53,19 +58,29 @@ public class Cart implements Cloneable{
         }
         return contentsCopy;
     }
+
+    /**
+     * @return the contents
+     */
+    public Map<Integer,Integer> getContMap() {
+        return contMap;
+    }
+    
+    public Map<Integer,Integer> getContMapCopy() {
+        Map<Integer,Integer> contMapCopy = new HashMap<>();
+        contMapCopy.putAll(contMap);
+        return contMapCopy;
+    }
     
     public ModelOrder convertIntoOrder() throws CloneNotSupportedException{
         return (ModelOrder) this.clone();
     }
     
-    public void addItem(Item newItem){  //rätt sätt att använda quantity?
-//        for (Item content : getContents()) {
-//            if (content.id == newItem.id) {
-//                content.quantity += newItem.quantity;
-//                return;
-//            }
-//        }
-//        getContents().add(newItem);
+    public void addItem(Integer itemID, Integer amount){  //rätt sätt att använda quantity?
+        if (contMap != null) {
+            int count = contMap.containsKey(itemID) ? contMap.get(amount) : 0;
+            contMap.put(itemID, count + amount);
+        }
     }
     
     public void removeItem(Item selectedItem){  //rätt sätt att använda quantity?
@@ -84,6 +99,10 @@ public class Cart implements Cloneable{
 //            }
 //            
 //        }
+    }
+    
+    public void clearCart(){
+        contMap.clear();
     }
     
     @Override
