@@ -76,29 +76,22 @@ public class Cart implements Cloneable{
         return (ModelOrder) this.clone();
     }
     
-    public void addItem(Integer itemID, Integer amount){  //rätt sätt att använda quantity?
+    public void addItem(Integer itemID, Integer amount){
         if (contMap != null) {
-            int count = contMap.containsKey(itemID) ? contMap.get(amount) : 0;
-            contMap.put(itemID, count + amount);
+            int currentAmount = contMap.containsKey(itemID) ? contMap.get(amount) : 0;
+            contMap.put(itemID, currentAmount + amount);
         }
     }
     
-    public void removeItem(Item selectedItem){  //rätt sätt att använda quantity?
-//        Iterator it = getContents().iterator();
-//        Item item;
-//        while (it.hasNext()) {
-//            item = (Item) it.next();    // varför ger den objekt här utan konvertering? Generellt iterator, inte item specifikt
-//            if (item.id == selectedItem.id) {
-//                if (item.quantity - selectedItem.quantity <= 0) {
-//                    it.remove();
-//                    return;
-//                } else {
-//                    item.quantity -= selectedItem.quantity;
-//                    return;
-//                }
-//            }
-//            
-//        }
+    public void removeItem(Integer itemID, Integer amount){
+        if (contMap != null && contMap.containsKey(itemID)) {
+            int currentAmount = contMap.get(itemID);
+            if (currentAmount - amount > 0) {
+                contMap.put(itemID, currentAmount - amount);
+            } else {
+                contMap.remove(itemID);
+            }
+        }
     }
     
     public void clearCart(){
