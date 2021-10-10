@@ -1,7 +1,6 @@
 package DataLayer;
 
 import Enums.Category;
-import DataLayer.DBManager;
 import Logic.Item;
 import java.sql.*;
 import java.util.*;

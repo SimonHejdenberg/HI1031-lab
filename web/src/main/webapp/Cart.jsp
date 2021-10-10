@@ -38,6 +38,9 @@
             <%}%>
             <button name="clearCart" onclick="<% session.removeAttribute("cart");
                 session.setAttribute("cart", new Cart());%>">Clear Cart</button>
+            <form action="buy" method="POST">
+                <button name="buy" value="">Buy</button>  
+            </form>
 
         </div>
 
