@@ -25,7 +25,7 @@
     </head>
     <body>
         <div class="header">
-            <%@ include  file="html/header.html" %>
+            <%@ include  file="jspheader.jsp" %>
         </div>
         <div class="main">
             <p>Welcome ${user.getUsername()} </p>
@@ -41,9 +41,12 @@
                     <p><%=item.getPrice()%></p>
                     <p><%=item.getQuantity()%></p>
 
-                    <% String itemName = item.getName(); ItemInfo curItem = item;%>
-                    <button name='addItem' value='<%=item.getId()%>' onclick='addItemToCart("<%=item.getName()%>"); <%tempCart.addItem(curItem, 1);%>' >Add to cart</button>
-
+                    <% String itemName = item.getName();%>
+                    <%if (item.getQuantity() <= 0) {%>
+                        <button name='addItem' disabled="disabled">Add to cart</button>
+                    <%}else{%>
+                        <button name='addItem' value='<%=item.getId()%>' onclick='addItemToCart("<%=item.getName()%>")'  <%tempCart.addItem(item, 1); session.setAttribute("cart", tempCart);%> >Add to cart</button>
+                    <%}%>
                 </div>
                 <%}%>
             </div>

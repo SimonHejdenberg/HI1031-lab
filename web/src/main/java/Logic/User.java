@@ -99,6 +99,10 @@ public class User {
         }
         return cart;
     }
+    
+    public SecurityLevel getSecLevel(){
+        return seclevel;
+    }
 
     public Enum getSeclevel() {
         return seclevel;

@@ -7,14 +7,14 @@
     </head>
     <body>
         <div class="header">
-            <%@ include  file="html/header.html" %>
+            <%@ include  file="jspheader.jsp" %>
         </div>
         <div class="main">
             <a href="store.jsp">Go to store</a>
         </div>
 
         <div class="footer">
-            <%@ include  file="html/footer.html" %>
+            <%@ include  file="jspfooter.jsp" %>
         </div>
 
 
