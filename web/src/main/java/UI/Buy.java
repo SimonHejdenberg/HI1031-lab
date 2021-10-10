@@ -1,9 +1,17 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package UI;
 
-import Enums.SecurityLevel;
+import Logic.Cart;
+import Logic.ItemHandler;
+import Logic.Order;
 import Logic.User;
-import Logic.UserManager;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.time.LocalDate;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,8 +23,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author jemsann
  */
-@WebServlet(name = "user_login", urlPatterns = {"/user_login"})
-public class user_login extends HttpServlet {
+@WebServlet(name = "Buy", urlPatterns = {"/Buy"})
+public class Buy extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -30,7 +38,7 @@ public class user_login extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        doPost(request, response);
+
     }
 
     /**
@@ -44,19 +52,14 @@ public class user_login extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-
-        UserInfo user = new UserInfo(username, password);
-        User retUser = UserManager.validateUser(user);;
-        if (retUser != null) {
-            UserInfo sessionUser = new UserInfo(retUser.getUserID(), retUser.getFirstname(), retUser.getLastname(), retUser.getUsername(), (SecurityLevel) retUser.getSeclevel());
-            RequestDispatcher rd = request.getRequestDispatcher("store.jsp");
-            request.getSession().setAttribute("user", sessionUser);
+        System.out.println("buying");
+        Cart userCart = (Cart) request.getSession().getAttribute("cart");
+        if (request.getSession().getAttribute("user") == null) {
+            RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
             rd.forward(request, response);
         } else {
-            RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-            rd.forward(request, response);
+            User user = (User) request.getSession().getAttribute("user");
+            boolean status = ItemHandler.CreateOrder(userCart, user);
         }
     }
 

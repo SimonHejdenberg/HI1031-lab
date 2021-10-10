@@ -14,7 +14,7 @@ import java.util.logging.Logger;
  */
 public class UserManager {
 
-    public static boolean validateUser(UserInfo user) {
+    public static User validateUser(UserInfo user) {
         return UserDB.ValidateUser(user.getUsername(), user.getHashcode());
     }
 

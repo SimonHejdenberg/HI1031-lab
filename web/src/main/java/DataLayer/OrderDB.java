@@ -8,6 +8,7 @@ import Logic.Order;
 import UI.ItemInfo;
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -54,7 +55,6 @@ public class OrderDB extends Logic.Order {
         try {
 
             //behöver dubbla SQL statements, pga koppling Order - Item
-            
             Connection con = DBManager.getConnection();
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT 1 FROM T_ORDEROVERVIEW WHERE OrderID = " + orderID);
@@ -75,16 +75,16 @@ public class OrderDB extends Logic.Order {
         }
         return order.items != null ? order : null;
     }
-    
+
     /*
     Förslag på T_Order:
-    CREATE TABLE IF NOT EXISTS T_Order(
+    CREATE TABLE IF NOT EXISTS t_order(
         OrderID INT NOT NULL,
         UserID INT NOT NULL,
         OrderDate DATE NOT NULL,
         --TotalCost DOUBLE NOT NULL,      // Ska vi ha denna?
         CONSTRAINT t_order_pk PRIMARY KEY(OrderID, UserID),
-        CONSTRAINT t_order_userid_fk FOREIGN KEY(UserID) REFERENCES T_User(UserID) ON DELETE CASCADE,
+        CONSTRAINT t_order_userid_fk FOREIGN KEY(UserID) REFERENCES t_users(UserID) ON DELETE CASCADE,
     );
     
     Förslag på T_OrderItems:
@@ -96,24 +96,25 @@ public class OrderDB extends Logic.Order {
         CONSTRAINT t_orderitems_orderid_fk FOREIGN KEY(OrderID) REFERENCES T_Order(OrderID) ON DELETE CASCADE,
         CONSTRAINT t_orderitems_itemid_fk FOREIGN KEY(ItemID) REFERENCES T_Item(ItemID) ON DELETE SET NULL,
     );
-    */
-    
-    public static boolean submitCustomerOrder(Order order) throws SQLException{
-        Connection con = null;
+     */
+    public static boolean submitCustomerOrder(Order order) throws SQLException {
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/lab1", "sqladmin", "truepassword1");
+
         PreparedStatement prepStatTOrder = null; //T_Order: | OrderID(pk) | UserID(fk,pk) | OrderDate | TotalCost (om vi ska ha den) |
         PreparedStatement prepStatTOrderItems = null; //T_OrderItems: | OrderID(fk,pk) | ItemID(fk,pk) | Amount |
         int orderID = -1;
         try {
-            con = DBManager.getConnection();
             con.setAutoCommit(false);
-            
-            String sqlTOrder = "INSERT INTO T_ORDER (UserID, OrderDate) VALUES (?,?)";
+
+            String sqlTOrder = "INSERT INTO t_order (UserID, OrderDate, TotalCost) VALUES (?,?,?)";
             prepStatTOrder = con.prepareStatement(sqlTOrder, prepStatTOrder.RETURN_GENERATED_KEYS);
             prepStatTOrder.setInt(1, order.getUser().getUserID());
             prepStatTOrder.setDate(2, java.sql.Date.valueOf(order.getOrderDate()));
+            prepStatTOrder.setInt(3,200);
             prepStatTOrder.executeUpdate();
-
-            try (ResultSet generatedKeys = prepStatTOrder.getGeneratedKeys()) {
+            con.commit();
+            /*
+            try ( ResultSet generatedKeys = prepStatTOrder.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     orderID = generatedKeys.getInt(1);
                 } else {
@@ -121,22 +122,24 @@ public class OrderDB extends Logic.Order {
                 }
             } catch (Exception e) {
             }
-                
+
             try {
-                String sqlTOrderItems = "INSERT INTO T_ORDER (OrderID, ItemID, Amount) VALUES (?,?,?)";
+                String sqlTOrderItems = "INSERT INTO t_orderitems (OrderID, ItemID, Amount) VALUES (?,?,?)";
                 prepStatTOrderItems = con.prepareStatement(sqlTOrderItems);
-                
-                for (Map.Entry<ItemInfo,Integer> en : order.contMap.entrySet()) {
+
+                for (Map.Entry<ItemInfo, Integer> en : order.contMap.entrySet()) {
                     prepStatTOrderItems.setInt(1, orderID);
                     prepStatTOrderItems.setInt(2, en.getKey().id);
-                    prepStatTOrderItems.setInt(3, en.getValue());
+                    prepStatTOrderItems.setInt(3, en.getValue().intValue());
                     prepStatTOrderItems.executeUpdate();
                 }
                 con.commit();
             } catch (Exception e) {
             }
+             */
         } catch (Exception e) {
             con.rollback();
+            e.printStackTrace();
             return false;
         } finally {
             try {   //temp

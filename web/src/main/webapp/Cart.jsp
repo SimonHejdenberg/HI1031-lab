@@ -30,16 +30,16 @@
                 <%for (Map.Entry<ItemInfo, Integer> entry : set) {
                         ItemInfo k = entry.getKey();
                         int amount = entry.getValue();%>
-                <p><%=k.getName()%></p>
-                <p><%=k.getPrice()%></p>
-                <p><%=amount%></p>
+                <p>Name<%=k.getName()%></p>
+                <p>Price <%=k.getPrice()%></p>
+                <p>Amount <%=amount%></p>
                 <%}%>
             </div>
             <%}%>
             <button name="clearCart" onclick="<% session.removeAttribute("cart");
                 session.setAttribute("cart", new Cart());%>">Clear Cart</button>
-            <form action="buy" method="POST">
-                <button name="buy" value="">Buy</button>  
+            <form action="Buy" method="POST">
+                <button name="buy">Buy</button>  
             </form>
 
         </div>

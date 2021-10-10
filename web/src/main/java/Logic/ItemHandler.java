@@ -1,6 +1,8 @@
 package Logic;
 
 import UI.ItemInfo;
+import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -32,6 +34,17 @@ public class ItemHandler {
         } else {
             return null;
         }
+    }
+
+    public static boolean CreateOrder(Cart cart, User user) {
+        Order order = new Order(user, -1, cart, LocalDate.now());
+        try {
+            boolean status = Order.submitCustomerOrder(order);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
 }

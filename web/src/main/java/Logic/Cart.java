@@ -47,6 +47,10 @@ public class Cart implements Cloneable {
         return user;
     }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     /**
      * @return the contents
      */
@@ -75,9 +79,6 @@ public class Cart implements Cloneable {
         return contMapCopy;
     }
 
-    public ModelOrder convertIntoOrder() throws CloneNotSupportedException {
-        return (ModelOrder) this.clone();
-    }
 
     public void addItem(ItemInfo item, Integer amount) {
         if (contMap != null) {

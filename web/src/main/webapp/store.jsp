@@ -4,6 +4,7 @@
     Author     : jemsann
 --%>
 
+<%@page import="Logic.Item"%>
 <%@page import="Logic.Cart"%>
 <%@page import="UI.UserInfo"%>
 <%@page import="java.util.Iterator"%>
@@ -16,8 +17,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="css/main.css" type="text/css"/>  
-        <% Cart tempCart = new Cart();
-            session.setAttribute("cart", tempCart); %>
+        <% Cart tempCart = new Cart();  session.setAttribute("cart", tempCart);%>
         <%if (session.getAttribute("user") != null) {
                 UserInfo user = (UserInfo) session.getAttribute("user");
             }%>
@@ -41,8 +41,8 @@
                     <p><%=item.getPrice()%></p>
                     <p><%=item.getQuantity()%></p>
 
-                    <% String itemName = item.getName();%>
-                    <button name='addItem' value='<%=item.getId()%>' onclick='addItemToCart("<%=item.getName()%>")'  <%tempCart.addItem(item, 1); session.setAttribute("cart", tempCart);%> >Add to cart</button>
+                    <% String itemName = item.getName(); ItemInfo curItem = item;%>
+                    <button name='addItem' value='<%=item.getId()%>' onclick='addItemToCart("<%=item.getName()%>"); <%tempCart.addItem(curItem, 1);%>' >Add to cart</button>
 
                 </div>
                 <%}%>

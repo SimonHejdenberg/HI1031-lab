@@ -28,6 +28,7 @@ public class ItemDB extends Logic.Item {
             e.printStackTrace();
         }
         try ( Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/lab1", "sqladmin", "truepassword1")) {
+            // try ( Connection conn = DBManager.getConnection()) {
 
             String sql = "SELECT * FROM lab1.t_items";
             try ( PreparedStatement stmt = conn.prepareStatement(sql)) {

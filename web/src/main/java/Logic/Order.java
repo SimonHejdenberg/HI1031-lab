@@ -28,9 +28,10 @@ public class Order {
         this.items = items;
     }
 
-    protected Order(User user, int id, Cart cart, LocalDate orderDate) {
+    public Order(User user, int id, Cart cart, LocalDate orderDate) {
         this.user = user;
         this.id = id;
+        contMap = new HashMap<>();
         contMap.putAll(cart.getContMap());
         this.orderDate = orderDate;
     }
