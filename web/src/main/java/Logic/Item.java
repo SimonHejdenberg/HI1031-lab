@@ -40,6 +40,7 @@ public class Item {
         return ItemDB.getAllItems();
     }
 
+
     public int getId() {
         return id;
     }

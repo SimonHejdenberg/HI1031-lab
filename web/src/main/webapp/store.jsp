@@ -15,7 +15,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="css/main.css" type="text/css"/>  
         <%String username;%>
-        <%if(session.getAttribute("username") == null) {
+        <%if (session.getAttribute("username") == null) {
                 username = "New User";
             } else {
                 username = (String) session.getAttribute("username").toString();
@@ -35,10 +35,13 @@
                         ItemInfo item = it.next();%>
                 <div class="grid-item">
                     <img width="50" height="50" src="pictures/<%=item.getPictureUrl()%>" />
-                    <p> <%=item.getName()%></p>
+                    <p><%=item.getName()%></p>
                     <p><%=item.getDescription()%></p>
-                    <p> <%=item.getPrice()%></p>
-                    <input type ="button" height="5" width="6" src="pictures/Cart.jpg"></input>
+                    <p><%=item.getPrice()%></p>
+                    <p><%=item.getQuantity()%></p>
+                    <%if (session.getAttribute("username") != null) {%>
+                    <button type='submit' name='addItem' value='<%=item.getId()%>'>Add to cart</button>
+                    <%}%>
                 </div>
                 <%}%>
             </div>

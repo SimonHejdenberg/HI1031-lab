@@ -1,17 +1,20 @@
-<%-- 
-    Document   : Cart
-    Created on : 8 okt. 2021, 18:04:37
-    Author     : simon
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
+        <title>Template Page</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <link rel="stylesheet" href="css/main.css" type="text/css"/>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <div class="header">
+            <%@ include  file="html/header.html" %>
+        </div>
+        <div class="main">
+            <h1>Use this template to create other JSP and have header and footer automatically</h1>
+        </div>
+
+        <div class="footer">
+            <%@ include  file="html/footer.html" %>
+        </div>
     </body>
 </html>
