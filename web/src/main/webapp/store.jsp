@@ -42,8 +42,11 @@
                     <p><%=item.getQuantity()%></p>
 
                     <% String itemName = item.getName();%>
-                    <button name='addItem' value='<%=item.getId()%>' onclick='addItemToCart("<%=item.getName()%>")'  <%tempCart.addItem(item, 1); session.setAttribute("cart", tempCart);%> >Add to cart</button>
-
+                    <%if (item.getQuantity() <= 0) {%>
+                        <button name='addItem' disabled="disabled">Add to cart</button>
+                    <%}else{%>
+                        <button name='addItem' value='<%=item.getId()%>' onclick='addItemToCart("<%=item.getName()%>")'  <%tempCart.addItem(item, 1); session.setAttribute("cart", tempCart);%> >Add to cart</button>
+                    <%}%>
                 </div>
                 <%}%>
             </div>
