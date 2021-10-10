@@ -21,7 +21,7 @@
     </head>
     <body>
         <div class="header">
-            <%@ include  file="html/header.html" %>
+            <%@ include  file="jspheader.jsp" %>
         </div>
         <div class="main">
             <h1>Cart</h1>
@@ -42,7 +42,7 @@
         </div>
 
         <div class="footer">
-            <%@ include  file="html/footer.html" %>
+            <%@ include  file="jspfooter.jsp" %>
         </div>
     </body>
 </html>

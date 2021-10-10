@@ -25,7 +25,7 @@
     </head>
     <body>
         <div class="header">
-            <%@ include  file="html/header.html" %>
+            <%@ include  file="jspheader.jsp" %>
         </div>
         <div class="main">
             <p>Welcome ${user.getUsername()} </p>
