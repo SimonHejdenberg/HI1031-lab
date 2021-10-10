@@ -2,6 +2,7 @@ package Logic;
 
 import DataLayer.ItemDB;
 import DataLayer.OrderDB;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -42,7 +43,7 @@ public class Order {
         return OrderDB.getCustomerOrders(user.getUserID());
     }
 
-    public static Collection submitCustomerOrder(Order order) {
+    public static boolean submitCustomerOrder(Order order) throws SQLException{
         return OrderDB.submitCustomerOrder(order);
     }
 

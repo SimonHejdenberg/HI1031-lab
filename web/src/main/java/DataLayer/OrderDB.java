@@ -15,6 +15,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
 /**
  *
@@ -94,62 +95,56 @@ public class OrderDB extends Logic.Order {
         CONSTRAINT t_orderitems_orderid_fk FOREIGN KEY(OrderID) REFERENCES T_Order(OrderID) ON DELETE CASCADE,
         CONSTRAINT t_orderitems_itemid_fk FOREIGN KEY(ItemID) REFERENCES T_Item(ItemID) ON DELETE SET NULL,
     );
-    
-    CREATE TABLE IF NOT EXISTS T_Created(
-    BookID INT NOT NULL,
-    AuthorID INT NOT NULL,
-    CONSTRAINT t_created_pk PRIMARY KEY(BookID, AuthorID),
-    CONSTRAINT t_created_bookid_fk FOREIGN KEY(BookID) REFERENCES T_Book(BookID) ON DELETE CASCADE,
-    CONSTRAINT t_created_authorid_fk FOREIGN KEY(AuthorID) REFERENCES T_Author(AuthorID) ON DELETE CASCADE
-    );
-    
-    
     */
-    public static Collection submitCustomerOrder(Order order) { //T_Order: | OrderID(pk) | UserID(fk,pk) | OrderDate | TotalCost (om vi ska ha den) |
-        PreparedStatement pstmt = null;
+    
+    public static boolean submitCustomerOrder(Order order) throws SQLException{
+        Connection con = null;
+        PreparedStatement prepStatTOrder = null; //T_Order: | OrderID(pk) | UserID(fk,pk) | OrderDate | TotalCost (om vi ska ha den) |
+        PreparedStatement prepStatTOrderItems = null; //T_OrderItems: | OrderID(fk,pk) | ItemID(fk,pk) | Amount |
+        int orderID = -1;
         try {
-            Connection con = DBManager.getConnection();
+            con = DBManager.getConnection();
             con.setAutoCommit(false);
-            String sql = "INSERT INTO T_ORDER (OrderID, UserID, OrderDate) VALUES (?,?,?)";
-            pstmt = con.prepareStatement(sql);
             
-            
-            StringBuilder sqlBuilder = new StringBuilder();
-            try {
-                sqlBuilder.append("INSERT INTO T_ORDER (OrderID, UserID, OrderDate) VALUES (");
-                sqlBuilder.append(order.getId());
-                sqlBuilder.append(",");
-                sqlBuilder.append(order.getUser().getUserID());
-                sqlBuilder.append(",");
-                sqlBuilder.append(order.getOrderDate());  // korrekt format?
-                sqlBuilder.append(");");   //inget ; behövs?
-                
-                
+            String sqlTOrder = "INSERT INTO T_ORDER (UserID, OrderDate) VALUES (?,?)";
+            prepStatTOrder = con.prepareStatement(sqlTOrder, prepStatTOrder.RETURN_GENERATED_KEYS);
+            prepStatTOrder.setInt(1, order.getUser().getUserID());
+            prepStatTOrder.setDate(2, java.sql.Date.valueOf(order.getOrderDate()));
+            prepStatTOrder.executeUpdate();
+
+            try (ResultSet generatedKeys = prepStatTOrder.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    orderID = generatedKeys.getInt(1);
+                } else {
+                    throw new SQLException("Creating order failed, no ID obtained.");
+                }
             } catch (Exception e) {
             }
-
-            
+                
+            try {
+                String sqlTOrderItems = "INSERT INTO T_ORDER (OrderID, ItemID, Amount) VALUES (?,?,?)";
+                prepStatTOrderItems = con.prepareStatement(sqlTOrderItems);
+                
+                for (Map.Entry<Integer,Integer> en : order.contMap.entrySet()) {
+                    prepStatTOrderItems.setInt(1, orderID);
+                    prepStatTOrderItems.setInt(2, en.getKey());
+                    prepStatTOrderItems.setInt(3, en.getValue());
+                    prepStatTOrderItems.executeUpdate();
+                }
+                con.commit();
+            } catch (Exception e) {
+            }
         } catch (Exception e) {
+            con.rollback();
+            return false;
         } finally {
             try {   //temp
-                pstmt.close();
+                prepStatTOrder.close();
+                prepStatTOrderItems.close();
             } catch (Exception e) {
             }
         }
-        /*
-        INSERT INTO T_Author (firstName, lastName, dateOfBirth) VALUES ('J.R.R.', 'Tolkien', '1892-01-03');
-        INSERT INTO T_Author (firstName, lastName, dateOfBirth) VALUES ('J.K.', 'Rowling', '1965-07-31');
-
-        INSERT INTO T_Created (BookID, AuthorID) Values ((SELECT Bookid from T_BOOK where BOOKID = 1),
-        (select AuthorID from T_author where AuthorID = 1));
-        INSERT INTO T_Created (BookID, AuthorID) Values ((SELECT Bookid from T_BOOK where BOOKID = 2),
-        (select AuthorID from T_author where AuthorID = 1));
-        INSERT INTO T_Created (BookID, AuthorID) Values ((SELECT Bookid from T_BOOK where BOOKID = 3),
-        (select AuthorID from T_author where AuthorID = 1));
-        INSERT INTO T_Created (BookID, AuthorID) Values ((SELECT Bookid from T_BOOK where BOOKID = 4),
-        (select AuthorID from T_author where AuthorID = 2));
-        */
-        return null;
+        return true;
     }
 
     private static LocalDate convertToLocalDate(Date date) {
