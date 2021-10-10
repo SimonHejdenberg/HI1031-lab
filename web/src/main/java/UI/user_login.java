@@ -50,7 +50,7 @@ public class user_login extends HttpServlet {
         System.out.println("Status " + status);
         if (status) {
             RequestDispatcher rd = request.getRequestDispatcher("store.jsp");
-            request.getSession().setAttribute("username", username);
+            request.getSession().setAttribute("user", user);
             rd.forward(request, response);
         } else {
             RequestDispatcher rd = request.getRequestDispatcher("index.jsp");

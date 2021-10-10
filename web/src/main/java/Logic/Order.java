@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import UI.ItemInfo;
 
 /**
  *
@@ -18,7 +19,7 @@ public class Order {
     public int id;
     public LocalDate orderDate;
     public ArrayList<ItemDB> items;
-    public Map<Integer, Integer> contMap;
+    public Map<ItemInfo, Integer> contMap;
     public User user;
 
     protected Order(int id, LocalDate orderDate, ArrayList<ItemDB> items) {
@@ -26,7 +27,7 @@ public class Order {
         this.orderDate = orderDate;
         this.items = items;
     }
-    
+
     protected Order(User user, int id, Cart cart, LocalDate orderDate) {
         this.user = user;
         this.id = id;
@@ -43,7 +44,7 @@ public class Order {
         return OrderDB.getCustomerOrders(user.getUserID());
     }
 
-    public static boolean submitCustomerOrder(Order order) throws SQLException{
+    public static boolean submitCustomerOrder(Order order) throws SQLException {
         return OrderDB.submitCustomerOrder(order);
     }
 
@@ -66,23 +67,23 @@ public class Order {
     public ArrayList<ItemDB> getItems() {
         return items;
     }
-    
+
     public void setItems(ArrayList<ItemDB> items) {
         this.items = items;
     }
-    
-    public Map<Integer,Integer> getContMap() {
+
+    public Map<ItemInfo, Integer> getContMap() {
         return contMap;
     }
-    
-    public Map<Integer,Integer> getContMapCopy() {
-        Map<Integer,Integer> contMapCopy = new HashMap<>();
+
+    public Map<ItemInfo, Integer> getContMapCopy() {
+        Map<ItemInfo, Integer> contMapCopy = new HashMap<>();
         contMapCopy.putAll(contMap);
         return contMapCopy;
     }
-    
-    public User getUser(){
+
+    public User getUser() {
         return user;
     }
-    
+
 }

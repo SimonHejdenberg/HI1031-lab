@@ -4,6 +4,8 @@
     Author     : jemsann
 --%>
 
+<%@page import="Logic.Cart"%>
+<%@page import="UI.UserInfo"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="Logic.ItemHandler"%>
 <%@page import="UI.ItemInfo"%>
@@ -14,11 +16,10 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="css/main.css" type="text/css"/>  
-        <%String username;%>
-        <%if (session.getAttribute("username") == null) {
-                username = "New User";
-            } else {
-                username = (String) session.getAttribute("username").toString();
+        <% Cart tempCart = new Cart();
+            session.setAttribute("cart", tempCart); %>
+        <%if (session.getAttribute("user") != null) {
+                UserInfo user = (UserInfo) session.getAttribute("user");
             }%>
         <title> Webshop </title>
     </head>
@@ -27,7 +28,7 @@
             <%@ include  file="html/header.html" %>
         </div>
         <div class="main">
-            <p>Welcome <%=username%></p>
+            <p>Welcome ${user.getUsername()} </p>
             <div class="flex-container">
                 <% Collection<ItemInfo> items = ItemHandler.getItems();
                     Iterator<ItemInfo> it = items.iterator();
@@ -39,18 +40,24 @@
                     <p><%=item.getDescription()%></p>
                     <p><%=item.getPrice()%></p>
                     <p><%=item.getQuantity()%></p>
-                    <%if (session.getAttribute("username") != null) {%>
-                    <button type='submit' name='addItem' value='<%=item.getId()%>'>Add to cart</button>
-                    <%}%>
+
+                    <% String itemName = item.getName();%>
+                    <button name='addItem' value='<%=item.getId()%>' onclick='addItemToCart("<%=item.getName()%>")'  <%tempCart.addItem(item, 1); session.setAttribute("cart", tempCart);%> >Add to cart</button>
+
                 </div>
                 <%}%>
             </div>
         </div>
 
 
-        <div class="footer">
-            <%@ include  file="html/footer.html" %>
-        </div>
+       
 
     </body>
+    <script language="javascript">
+        function addItemToCart(name) {
+            alert("You've added " + name + " to cart");
+        }
+    </script>
+
+
 </html>

@@ -5,6 +5,7 @@ import Enums.Category;
 import Enums.Category;
 import Logic.Item;
 import Logic.Order;
+import UI.ItemInfo;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -125,9 +126,9 @@ public class OrderDB extends Logic.Order {
                 String sqlTOrderItems = "INSERT INTO T_ORDER (OrderID, ItemID, Amount) VALUES (?,?,?)";
                 prepStatTOrderItems = con.prepareStatement(sqlTOrderItems);
                 
-                for (Map.Entry<Integer,Integer> en : order.contMap.entrySet()) {
+                for (Map.Entry<ItemInfo,Integer> en : order.contMap.entrySet()) {
                     prepStatTOrderItems.setInt(1, orderID);
-                    prepStatTOrderItems.setInt(2, en.getKey());
+                    prepStatTOrderItems.setInt(2, en.getKey().id);
                     prepStatTOrderItems.setInt(3, en.getValue());
                     prepStatTOrderItems.executeUpdate();
                 }
