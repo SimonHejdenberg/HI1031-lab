@@ -5,9 +5,8 @@
  */
 package Logic;
 
-import java.util.ArrayList;
+import UI.ItemInfo;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
 
@@ -15,26 +14,30 @@ import java.util.Map;
  *
  * @author simon
  */
-public class Cart implements Cloneable{
-    
-    private final User user;
+public class Cart implements Cloneable {
+
+    private User user;
     private LinkedList<Item> contents;
-    private Map<Integer, Integer> contMap = null;  //ItemID, amount
-    
-    public Cart(User user){
+    private Map<ItemInfo, Integer> contMap = null;  //ItemID, amount
+
+    public Cart(User user) {
         this.user = user;
         this.contents = new LinkedList<>();
         this.contMap = new HashMap<>();
     }
-    
-    public Cart(User user, LinkedList<Item> contents){
+
+    public Cart(User user, LinkedList<Item> contents) {
         this.user = user;
         this.contents = contents;
     }
-    
-    public Cart(Cart cart){
+
+    public Cart(Cart cart) {
         this.user = cart.getUser();
         this.contents = cart.getContents();
+    }
+
+    public Cart() {
+        this.contMap = new HashMap<>();
     }
 
     /**
@@ -50,7 +53,7 @@ public class Cart implements Cloneable{
     public LinkedList<Item> getContents() {
         return contents;
     }
-    
+
     public LinkedList<Item> getContentsCopy() {
         LinkedList<Item> contentsCopy = new LinkedList<>();
         for (Item content : contents) {
@@ -62,44 +65,44 @@ public class Cart implements Cloneable{
     /**
      * @return the contents
      */
-    public Map<Integer,Integer> getContMap() {
+    public Map<ItemInfo, Integer> getContMap() {
         return contMap;
     }
-    
-    public Map<Integer,Integer> getContMapCopy() {
-        Map<Integer,Integer> contMapCopy = new HashMap<>();
+
+    public Map<ItemInfo, Integer> getContMapCopy() {
+        Map<ItemInfo, Integer> contMapCopy = new HashMap<>();
         contMapCopy.putAll(contMap);
         return contMapCopy;
     }
-    
-    public ModelOrder convertIntoOrder() throws CloneNotSupportedException{
+
+    public ModelOrder convertIntoOrder() throws CloneNotSupportedException {
         return (ModelOrder) this.clone();
     }
-    
-    public void addItem(Integer itemID, Integer amount){
+
+    public void addItem(ItemInfo item, Integer amount) {
         if (contMap != null) {
-            int currentAmount = contMap.containsKey(itemID) ? contMap.get(amount) : 0;
-            contMap.put(itemID, currentAmount + amount);
+            int currentAmount = contMap.containsKey(item) ? contMap.get(amount) : 0;
+            contMap.put(item, currentAmount + amount);
         }
     }
-    
-    public void removeItem(Integer itemID, Integer amount){
-        if (contMap != null && contMap.containsKey(itemID)) {
-            int currentAmount = contMap.get(itemID);
+
+    public void removeItem(ItemInfo item, Integer amount) {
+        if (contMap != null && contMap.containsKey(item)) {
+            int currentAmount = contMap.get(item);
             if (currentAmount - amount > 0) {
-                contMap.put(itemID, currentAmount - amount);
+                contMap.put(item, currentAmount - amount);
             } else {
-                contMap.remove(itemID);
+                contMap.remove(item);
             }
         }
     }
-    
-    public void clearCart(){
+
+    public void clearCart() {
         contMap.clear();
     }
-    
+
     @Override
-    public String toString(){
+    public String toString() {
         StringBuilder sb = new StringBuilder();
         try {
             while (getContents().iterator().hasNext()) {
