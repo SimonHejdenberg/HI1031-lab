@@ -1,6 +1,7 @@
 package Logic;
 
 import DataLayer.UserDB;
+import Enums.SecurityLevel;
 import java.util.Objects;
 
 /**
@@ -11,11 +12,11 @@ public class User {
 
     private int userID = -1;    //????????
     private String firstname, lastname, username, password;  // password HASHning mot DB, dvs vi tar psw, kör hash funktin, skickar hash till DB?
-    private Enum seclevel = null;   //kanske inte funkar med enums i sql. DOCK så har mysql en enumtyp https://dev.mysql.com/doc/refman/8.0/en/enum.html
+    private SecurityLevel seclevel = null;   //kanske inte funkar med enums i sql. DOCK så har mysql en enumtyp https://dev.mysql.com/doc/refman/8.0/en/enum.html
     int hashcode;
     Cart cart = null;
 
-    public User(String firstname, String lastname, String username, String password, Enum seclevel) {
+    public User(String firstname, String lastname, String username, String password, SecurityLevel seclevel) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.username = username;
@@ -89,6 +90,10 @@ public class User {
             cart = new Cart(this);
         }
         return cart;
+    }
+    
+    public SecurityLevel getSecLevel(){
+        return seclevel;
     }
 
     // OBS INGEN GETTER FÖR PSW ELLER SECLEVEL

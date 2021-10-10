@@ -5,6 +5,8 @@
  */
 package Logic;
 
+import Enums.SecurityLevel;
+
 /**
  *
  * @author simon
@@ -19,7 +21,7 @@ public class Customer extends User {
     //Tycker vi använder cart som är super, så slipper vi skriva mer kod
     private Cart cart2;
 
-    public Customer(String firstname, String lastname, String username, String password, Enum seclevel) {
+    public Customer(String firstname, String lastname, String username, String password, SecurityLevel seclevel) {
         super(firstname, lastname, username, password, seclevel);
         newCart();
     }

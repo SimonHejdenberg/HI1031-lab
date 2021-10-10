@@ -16,7 +16,7 @@ public class UserDB extends Logic.User {
 
     private int UserID;
 
-    public UserDB(int userID, String firstname, String lastname, String username, String password, Enum seclevel) {
+    public UserDB(int userID, String firstname, String lastname, String username, String password, SecurityLevel seclevel) {
         super(firstname, lastname, username, password, seclevel);
         this.UserID = userID;
     }

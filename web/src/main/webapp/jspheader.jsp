@@ -4,6 +4,8 @@
     Author     : simon
 --%>
 
+<%@page import="Enums.SecurityLevel"%>
+<%@page import="UI.UserInfo"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -14,10 +16,20 @@
         <nav class="navbar">
             <a class="active" href="index.jsp"><i class="fa fa-fw fa-home"></i> Home</a>
             <a href="store.jsp"><i class="fa fa-fw fa-search"></i>Store</a>
-            <a href="warehouse.jsp"><i class="fa fa-fw fa-envelope"></i>Warehouse</a>
+            <%
+                try {
+                    UserInfo user = (UserInfo) session.getAttribute("user");
+                    if (user != null && (user.getSecLevel() == SecurityLevel.Admin || user.getSecLevel() == SecurityLevel.Staff)) {%>
+                            <a href="warehouse.jsp"><i class="fa fa-fw fa-envelope"></i>Warehouse</a>
+                            <%
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+            %>
             <div>
-            <a href="loginmanager.jsp"><i class="fa fa-fw fa-user"></i></a>
-            <a href="cart.jsp"><i class="fa fa-shopping-cart" aria-hidden="true"></i>Cart</a>
+                <a href="loginmanager.jsp"><i class="fa fa-fw fa-user"></i></a>
+                <a href="cart.jsp"><i class="fa fa-shopping-cart" aria-hidden="true"></i>Cart</a>
             </div>
         </nav>
     </header>

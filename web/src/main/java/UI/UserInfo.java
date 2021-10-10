@@ -1,5 +1,7 @@
 package UI;
 
+import Enums.SecurityLevel;
+
 /**
  *
  * @author jemsann
@@ -9,7 +11,7 @@ public class UserInfo extends Logic.User {
     private String username;
     private String password;
 
-    public UserInfo(String firstname, String lastname, String username, String password, Enum seclevel) {
+    public UserInfo(String firstname, String lastname, String username, String password, SecurityLevel seclevel) {
         super(firstname, lastname, username, password, seclevel);
         this.username = username;
         this.password = password;

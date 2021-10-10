@@ -5,12 +5,14 @@
  */
 package Logic;
 
+import Enums.SecurityLevel;
+
 /**
  *
  * @author simon
  */
 public class Staff extends User{
-    public Staff(String firstname, String lastname, String username, String password, Enum seclevel){
+    public Staff(String firstname, String lastname, String username, String password, SecurityLevel seclevel){
         super(firstname, lastname, username, password, seclevel);
     }
 }
