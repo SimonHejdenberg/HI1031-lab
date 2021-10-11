@@ -36,7 +36,7 @@ public class OrderDB extends Logic.Order {
         }
         return null;
     }
-    
+
     //String sql = "SELECT * FROM t_review, t_book WHERE UserID = ? AND t_review.BookID = t_book.BookID";
     /*
         String sql = "SELECT * FROM db_bookstore.t_book "
@@ -44,8 +44,7 @@ public class OrderDB extends Logic.Order {
             + "(SELECT BookID from db_bookstore.t_created "
             + "WHERE AuthorID IN "
             + "(SELECT AuthorID from db_bookstore.t_author WHERE firstName LIKE ? OR lastName LIKE ?));";
-    */
-    
+     */
     public static Collection getAllCustomerOrders(int customerID) {
         try {
             Connection con = DBManager.getConnection();
@@ -54,14 +53,13 @@ public class OrderDB extends Logic.Order {
                     + "SELECT ORDERID FROMT T_ORDER WHERE USERID = ?) ORDER BY ORDERID ASC";
             PreparedStatement prepStatTOrder = con.prepareStatement(sqlTOrder);
             prepStatTOrder.setInt(1, customerID);
-            
+
             ResultSet rs = prepStatTOrder.executeQuery();
-            
+
             ArrayList<OrderDB> orders = new ArrayList<OrderDB>();
-            
 
             while (rs.next()) {
-                if (orders.size() > 0 && rs.getInt(1)==orders.get(orders.size()-1).getId()) {
+                if (orders.size() > 0 && rs.getInt(1) == orders.get(orders.size() - 1).getId()) {
                     //orders.get(orders.size()-1).getContMap().put(
                     //        new ItemInfo(rs.getInt(2), sqlTOrder, count, Category.Android, sqlTOrder), )
                 }
@@ -75,7 +73,6 @@ public class OrderDB extends Logic.Order {
     public static OrderDB getCustomerOrder(int orderID, LocalDate date) {
         OrderDB order = new OrderDB(orderID, date);
         try {
-
             //behöver dubbla SQL statements, pga koppling Order - Item
             Connection con = DBManager.getConnection();
             Statement stmt = con.createStatement();
