@@ -25,7 +25,6 @@ public class Order {
     protected Order(int id, LocalDate orderDate, ArrayList<ItemDB> items) {
         this.id = id;
         this.orderDate = orderDate;
-        this.items = items;
     }
 
     public Order(User user, int id, Cart cart, LocalDate orderDate) {
