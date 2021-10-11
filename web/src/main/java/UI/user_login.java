@@ -41,36 +41,30 @@ public class user_login extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
         UserInfo user; 
+        User retUser;
         boolean status = false;
         if (username.equalsIgnoreCase("easydor")) {
             status = true;
             user = new UserInfo("Simon", "Hejdenberg", "Easydor", "123", SecurityLevel.Admin);
+            retUser = new User("Simon", "Hejdenberg", "Easydor", "123", SecurityLevel.Admin);
         } else {
             user = new UserInfo(username, password);
-            status = UserManager.validateUser(user);
+            retUser = UserManager.validateUser(user);
         }
         System.out.println("Status " + status);
-        if (status) {
-        UserInfo user = new UserInfo(username, password);
-        User retUser = UserManager.validateUser(user);
-        System.out.println("Password hash: " + password.hashCode());
-        System.out.println("UserInfo hash: " + user.getHashcode());
-        System.out.println("DB User username: " + retUser.getUsername());
-
         if (retUser != null) {
-            UserInfo sessionUser = new UserInfo(retUser.getUserID(), retUser.getFirstname(), retUser.getLastname(), retUser.getUsername(), (SecurityLevel) retUser.getSecLevel());
-            RequestDispatcher rd = request.getRequestDispatcher("store.jsp");
-            request.getSession().setAttribute("user", sessionUser);
-            rd.forward(request, response);
+                UserInfo sessionUser = new UserInfo(retUser.getUserID(), retUser.getFirstname(), retUser.getLastname(), retUser.getUsername(), (SecurityLevel) retUser.getSecLevel());
+                RequestDispatcher rd = request.getRequestDispatcher("store.jsp");
+                request.getSession().setAttribute("user", sessionUser);
+                rd.forward(request, response);
         } else {
-            RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-            rd.forward(request, response);
+                RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+                rd.forward(request, response);
         }
     }
 
