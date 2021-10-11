@@ -18,15 +18,8 @@ public class Order {
 
     public int id;
     public LocalDate orderDate;
-    public ArrayList<ItemDB> items;
     public Map<ItemInfo, Integer> contMap;
     public User user;
-
-    protected Order(int id, LocalDate orderDate, ArrayList<ItemDB> items) {
-        this.id = id;
-        this.orderDate = orderDate;
-        this.items = items;
-    }
 
     protected Order(User user, int id, Cart cart, LocalDate orderDate) {
         this.user = user;
@@ -40,8 +33,12 @@ public class Order {
         this.orderDate = orderDate;
     }
 
-    public static Collection getCustomerOrders(User user) {
-        return OrderDB.getCustomerOrders(user.getUserID());
+    public static OrderDB getCustomerOrder(Order order) {
+        return OrderDB.getCustomerOrder(order);
+    }
+    
+    public static Collection getAllCustomerOrders(User user) {
+        return OrderDB.getAllCustomerOrders(user.getUserID());
     }
 
     public static boolean submitCustomerOrder(Order order) throws SQLException {
@@ -62,14 +59,6 @@ public class Order {
 
     public void setOrderDate(LocalDate orderDate) {
         this.orderDate = orderDate;
-    }
-
-    public ArrayList<ItemDB> getItems() {
-        return items;
-    }
-
-    public void setItems(ArrayList<ItemDB> items) {
-        this.items = items;
     }
 
     public Map<ItemInfo, Integer> getContMap() {

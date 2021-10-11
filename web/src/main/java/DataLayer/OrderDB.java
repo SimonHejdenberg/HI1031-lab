@@ -24,15 +24,15 @@ import java.util.Map;
  */
 public class OrderDB extends Logic.Order {
 
-    private OrderDB(int id, LocalDate orderDate, ArrayList<ItemDB> items) {
-        super(id, orderDate, items);
-    }
-
     public OrderDB(int id, LocalDate orderDate) {
         super(id, orderDate);
     }
 
-    public static Collection getCustomerOrders(int customerID) {    //rename to getAllCustomerOrders ?
+    public static OrderDB getCustomerOrder(Order order) {
+        throw new UnsupportedOperationException();  //!!!
+    }
+
+    public static Collection getAllCustomerOrders(int customerID) {
         ArrayList<OrderDB> orders = new ArrayList<OrderDB>();
         try {
             Connection con = DBManager.getConnection();
@@ -48,55 +48,6 @@ public class OrderDB extends Logic.Order {
         }
         return orders;
     }
-
-    public static OrderDB getCustomerOrder(int orderID, LocalDate date) {
-        OrderDB order = new OrderDB(orderID, date);
-        try {
-
-            //behöver dubbla SQL statements, pga koppling Order - Item
-            
-            Connection con = DBManager.getConnection();
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT 1 FROM T_ORDEROVERVIEW WHERE OrderID = " + orderID);
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String name = rs.getString("name");
-                String description = rs.getString("description");
-                int quantity = rs.getInt("quantity");
-                double price = rs.getDouble("price");
-                String categoryString = rs.getString("category");
-                Category category = Category.valueOf(categoryString);
-                String pictureUrl = rs.getString("url");
-                order.items.add(new ItemDB(id, name, price, description, quantity, category, pictureUrl));
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return order.items != null ? order : null;
-    }
-    
-    /*
-    Förslag på T_Order:
-    CREATE TABLE IF NOT EXISTS T_Order(
-        OrderID INT NOT NULL,
-        UserID INT NOT NULL,
-        OrderDate DATE NOT NULL,
-        --TotalCost DOUBLE NOT NULL,      // Ska vi ha denna?
-        CONSTRAINT t_order_pk PRIMARY KEY(OrderID, UserID),
-        CONSTRAINT t_order_userid_fk FOREIGN KEY(UserID) REFERENCES T_User(UserID) ON DELETE CASCADE,
-    );
-    
-    Förslag på T_OrderItems:
-    CREATE TABLE IF NOT EXISTS T_Order(
-        OrderID INT NOT NULL,
-        ItemID INT NOT NULL,
-        Amount INT NOT NULL,
-        CONSTRAINT t_orderitems_pk PRIMARY KEY(OrderID, ItemID),
-        CONSTRAINT t_orderitems_orderid_fk FOREIGN KEY(OrderID) REFERENCES T_Order(OrderID) ON DELETE CASCADE,
-        CONSTRAINT t_orderitems_itemid_fk FOREIGN KEY(ItemID) REFERENCES T_Item(ItemID) ON DELETE SET NULL,
-    );
-    */
     
     public static boolean submitCustomerOrder(Order order) throws SQLException{
         Connection con = null;
