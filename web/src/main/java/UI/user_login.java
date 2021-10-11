@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "user_login", urlPatterns = {"/user_login"})
 public class user_login extends HttpServlet {
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -50,7 +49,7 @@ public class user_login extends HttpServlet {
         UserInfo user = new UserInfo(username, password);
         User retUser = UserManager.validateUser(user);;
         if (retUser != null) {
-            UserInfo sessionUser = new UserInfo(retUser.getUserID(), retUser.getFirstname(), retUser.getLastname(), retUser.getUsername(), (SecurityLevel) retUser.getSeclevel());
+            UserInfo sessionUser = new UserInfo(retUser.getUserID(), retUser.getFirstname(), retUser.getLastname(), retUser.getUsername(), (SecurityLevel) retUser.getSecLevel());
             RequestDispatcher rd = request.getRequestDispatcher("store.jsp");
             request.getSession().setAttribute("user", sessionUser);
             rd.forward(request, response);

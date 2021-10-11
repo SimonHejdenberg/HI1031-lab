@@ -92,9 +92,9 @@ public class UserDB extends Logic.User {
 
         } catch (SQLException outerSqlEx) {
             System.out.println("SQL Connection Exception");
-            System.out.println(outerSqlEx.getMessage());
-            System.out.println(outerSqlEx.getSQLState());
-            System.out.println(outerSqlEx.getErrorCode());
+            System.out.println("Message "+outerSqlEx.getMessage());
+            System.out.println("SQL State "+outerSqlEx.getSQLState());
+            System.out.println("Error code "+outerSqlEx.getErrorCode());
         }
         return null;
     }

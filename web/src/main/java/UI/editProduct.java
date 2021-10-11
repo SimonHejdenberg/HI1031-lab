@@ -5,7 +5,9 @@
  */
 package UI;
 
+import Logic.ItemHandler;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,8 +19,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author jemsann
  */
-@WebServlet(name = "product", urlPatterns = {"/product"})
-public class product extends HttpServlet {
+@WebServlet(name = "editProduct", urlPatterns = {"/editProduct"})
+public class editProduct extends HttpServlet {
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -45,11 +47,15 @@ public class product extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String productId = (String) request.getParameter("productId");
+        ItemInfo product = ItemHandler.getItem(Integer.parseInt(productId));
 
-        String product = (String) request.getParameter("editProductBtn");
-        RequestDispatcher rd = request.getRequestDispatcher("editProduct.jsp");
-        request.setAttribute("itemId", product);
+        boolean status = ItemHandler.UpdateProduct(product);
+        
+        RequestDispatcher rd = request.getRequestDispatcher("warehouse.jsp");
+        request.setAttribute("successful", status);
         rd.forward(request, response);
+
     }
 
     /**

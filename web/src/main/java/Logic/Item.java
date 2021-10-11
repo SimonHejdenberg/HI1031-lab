@@ -36,6 +36,8 @@ public class Item {
         this.pictureUrl = pictureUrl;
     }
 
+    
+    
     public static Collection getItems() {
         return ItemDB.getAllItems();
     }

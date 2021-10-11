@@ -24,6 +24,7 @@
             <%@ include  file="jspheader.jsp" %>
         </div>
         <div class="main">
+
             <h1>Cart</h1>
             <%if (set != null) {%> 
             <div class='flex-container'>
@@ -36,11 +37,8 @@
                 <%}%>
             </div>
             <%}%>
-            <button name="clearCart" onclick="<% session.removeAttribute("cart");
-                session.setAttribute("cart", new Cart());%>">Clear Cart</button>
-            <form action="Buy" method="POST">
-                <button name="buy">Buy</button>  
-            </form>
+
+            <button id="buyBtn" name="buy" onclick='javascript:customBuyFunction();return false;'>Buy</button>  
 
         </div>
 
@@ -48,4 +46,50 @@
             <%@ include  file="jspfooter.jsp" %>
         </div>
     </body>
+    <script>
+        function customBuyFunction() {
+            proto = window.location.protocol;
+            host = window.location.host;
+            context = window.location.pathname;
+            context = window.location.pathname.substring(0, context.lastIndexOf("/"));
+            context = context.replace("", ""); //applicationcontext
+            var xmlHttp;
+            try
+            {
+                // Firefox, Opera 8.0+, Safari
+                xmlHttp = new XMLHttpRequest();
+            } catch (exception)
+            { // Internet Explorer
+                try
+                {
+                    xmlHttp = new ActiveXObject("Msxml2.XMLHTTP");
+                } catch (exception)
+                {
+                    try
+                    {
+                        xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+                    } catch (exception)
+                    {
+                        alert("Your browser does not support AJAX!");
+                        return false;
+                    }
+                }
+            }
+            var host = window.location.host;
+            url = proto + "//" + host + context + "/Buy";
+
+            xmlHttp.open("POST", url, true); //the value true is for using asynchronous mode
+            xmlHttp.send();
+            xmlHttp.onreadystatechange = function ()
+            {
+                if (xmlHttp.readyState == 4)
+                {
+                    alert("Order placed!");
+                }
+            }
+        }
+
+
+    </script>
+
 </html>

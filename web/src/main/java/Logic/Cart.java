@@ -19,25 +19,30 @@ public class Cart implements Cloneable {
     private User user;
     private LinkedList<Item> contents;
     private Map<ItemInfo, Integer> contMap = null;  //ItemID, amount
+    public double total;
 
     public Cart(User user) {
         this.user = user;
         this.contents = new LinkedList<>();
         this.contMap = new HashMap<>();
+        this.total = 0;
     }
 
     public Cart(User user, LinkedList<Item> contents) {
         this.user = user;
         this.contents = contents;
+        this.total = 0;
     }
 
     public Cart(Cart cart) {
         this.user = cart.getUser();
         this.contents = cart.getContents();
+        this.total = 0;
     }
 
     public Cart() {
         this.contMap = new HashMap<>();
+        this.total = 0;
     }
 
     /**
@@ -79,9 +84,9 @@ public class Cart implements Cloneable {
         return contMapCopy;
     }
 
-
     public void addItem(ItemInfo item, Integer amount) {
         if (contMap != null) {
+            total += item.getPrice() * amount;
             int currentAmount = contMap.containsKey(item) ? contMap.get(amount) : 0;
             contMap.put(item, currentAmount + amount);
         }
@@ -95,7 +100,12 @@ public class Cart implements Cloneable {
             } else {
                 contMap.remove(item);
             }
+            total -= item.getPrice() * amount;
         }
+    }
+
+    public double getTotal() {
+        return total;
     }
 
     public void clearCart() {

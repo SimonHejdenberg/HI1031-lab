@@ -76,33 +76,13 @@ public class OrderDB extends Logic.Order {
         return order.items != null ? order : null;
     }
 
-    /*
-    Förslag på T_Order:
-    CREATE TABLE IF NOT EXISTS t_order(
-        OrderID INT NOT NULL,
-        UserID INT NOT NULL,
-        OrderDate DATE NOT NULL,
-        --TotalCost DOUBLE NOT NULL,      // Ska vi ha denna?
-        CONSTRAINT t_order_pk PRIMARY KEY(OrderID, UserID),
-        CONSTRAINT t_order_userid_fk FOREIGN KEY(UserID) REFERENCES t_users(UserID) ON DELETE CASCADE,
-    );
-    
-    Förslag på T_OrderItems:
-    CREATE TABLE IF NOT EXISTS T_Order(
-        OrderID INT NOT NULL,
-        ItemID INT NOT NULL,
-        Amount INT NOT NULL,
-        CONSTRAINT t_orderitems_pk PRIMARY KEY(OrderID, ItemID),
-        CONSTRAINT t_orderitems_orderid_fk FOREIGN KEY(OrderID) REFERENCES T_Order(OrderID) ON DELETE CASCADE,
-        CONSTRAINT t_orderitems_itemid_fk FOREIGN KEY(ItemID) REFERENCES T_Item(ItemID) ON DELETE SET NULL,
-    );
-     */
     public static boolean submitCustomerOrder(Order order) throws SQLException {
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/lab1", "sqladmin", "truepassword1");
 
         PreparedStatement prepStatTOrder = null; //T_Order: | OrderID(pk) | UserID(fk,pk) | OrderDate | TotalCost (om vi ska ha den) |
         PreparedStatement prepStatTOrderItems = null; //T_OrderItems: | OrderID(fk,pk) | ItemID(fk,pk) | Amount |
         int orderID = -1;
+
         try {
             con.setAutoCommit(false);
 
@@ -110,10 +90,9 @@ public class OrderDB extends Logic.Order {
             prepStatTOrder = con.prepareStatement(sqlTOrder, prepStatTOrder.RETURN_GENERATED_KEYS);
             prepStatTOrder.setInt(1, order.getUser().getUserID());
             prepStatTOrder.setDate(2, java.sql.Date.valueOf(order.getOrderDate()));
-            prepStatTOrder.setInt(3,200);
+            prepStatTOrder.setDouble(3, order.getTotal());
             prepStatTOrder.executeUpdate();
-            con.commit();
-            /*
+
             try ( ResultSet generatedKeys = prepStatTOrder.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     orderID = generatedKeys.getInt(1);
@@ -121,6 +100,7 @@ public class OrderDB extends Logic.Order {
                     throw new SQLException("Creating order failed, no ID obtained.");
                 }
             } catch (Exception e) {
+                e.printStackTrace();
             }
 
             try {
@@ -130,13 +110,14 @@ public class OrderDB extends Logic.Order {
                 for (Map.Entry<ItemInfo, Integer> en : order.contMap.entrySet()) {
                     prepStatTOrderItems.setInt(1, orderID);
                     prepStatTOrderItems.setInt(2, en.getKey().id);
-                    prepStatTOrderItems.setInt(3, en.getValue().intValue());
+                    prepStatTOrderItems.setInt(3, en.getValue());
                     prepStatTOrderItems.executeUpdate();
+                    System.out.println("Added " + orderID + " " + en.getKey().id);
                 }
                 con.commit();
             } catch (Exception e) {
             }
-             */
+
         } catch (Exception e) {
             con.rollback();
             e.printStackTrace();

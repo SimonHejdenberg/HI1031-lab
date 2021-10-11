@@ -104,10 +104,6 @@ public class User {
         return seclevel;
     }
 
-    public Enum getSeclevel() {
-        return seclevel;
-    }
-
     public void setSeclevel(SecurityLevel seclevel) {
         this.seclevel = seclevel;
     }

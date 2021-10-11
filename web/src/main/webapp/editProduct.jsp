@@ -18,7 +18,7 @@
     </head>
     <body>
         <h1>Edit item <%=product.getName()%></h1>
-        <form action="edit-product" method="POST">
+        <form action="editProduct" method="POST">
             <table style="width: 50%">
                 <tr>
                     <td>Id</td>
@@ -47,9 +47,12 @@
                 <tr>
                     <td>Picture</td>
                     <td><input type="text" name="product_name" value="<%=product.pictureUrl%>"/></td>
-                </tr>´
+                </tr>
             </table>
+
             <input type="submit" value="Submit" />
-    </form>
-</body>
+
+            <button type="button"> <a href="warehouse.jsp">Cancel</a></button>
+        </form>
+    </body>
 </html>

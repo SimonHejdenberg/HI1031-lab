@@ -128,4 +128,27 @@ public class ItemDB extends Logic.Item {
         return returnID > 0 ? true : false;
     }
 
+    public static boolean UpdateItem(Item item) {
+        try ( Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/lab1", "sqladmin", "truepassword1")) {
+            // try ( Connection conn = DBManager.getConnection()) {
+
+            String sql = "UPDATE t_orderitems SET name=? price=? description=? quantity=? category=? url=?  WHERE (OrderID = ?) and (ItemID = ?);";
+            try ( PreparedStatement stmt = conn.prepareStatement(sql)) {
+                int id = stmt.executeUpdate();
+                if (id >= 0) {
+                    return true;
+                }
+
+            } catch (SQLException innerSqlEx) {
+                innerSqlEx.printStackTrace();
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return false;
+    }
+
 }

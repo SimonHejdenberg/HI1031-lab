@@ -20,6 +20,7 @@ public class Order {
     public LocalDate orderDate;
     public ArrayList<ItemDB> items;
     public Map<ItemInfo, Integer> contMap;
+    public Cart cart;
     public User user;
 
     protected Order(int id, LocalDate orderDate, ArrayList<ItemDB> items) {
@@ -31,6 +32,7 @@ public class Order {
     public Order(User user, int id, Cart cart, LocalDate orderDate) {
         this.user = user;
         this.id = id;
+        this.cart = cart;
         contMap = new HashMap<>();
         contMap.putAll(cart.getContMap());
         this.orderDate = orderDate;
@@ -65,17 +67,17 @@ public class Order {
         this.orderDate = orderDate;
     }
 
-    public ArrayList<ItemDB> getItems() {
-        return items;
-    }
-
-    public void setItems(ArrayList<ItemDB> items) {
-        this.items = items;
-    }
-
     public Map<ItemInfo, Integer> getContMap() {
         return contMap;
     }
+
+    public Cart getCart() {
+        return cart;
+    }
+    public double getTotal(){
+        return cart.getTotal();
+    }
+            
 
     public Map<ItemInfo, Integer> getContMapCopy() {
         Map<ItemInfo, Integer> contMapCopy = new HashMap<>();

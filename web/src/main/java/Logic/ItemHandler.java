@@ -1,5 +1,6 @@
 package Logic;
 
+import DataLayer.ItemDB;
 import UI.ItemInfo;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -45,6 +46,12 @@ public class ItemHandler {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public static boolean UpdateProduct(ItemInfo product) {
+        Item item = new Item(product.getId(), product.getName(), product.getPrice(),product.getDescription(), product.getQuantity(), product.getCategory(), product.getPictureUrl());
+        return ItemDB.UpdateItem(item);
+
     }
 
 }
