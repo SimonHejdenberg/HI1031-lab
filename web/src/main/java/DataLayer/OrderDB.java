@@ -25,15 +25,15 @@ import java.util.Map;
  */
 public class OrderDB extends Logic.Order {
 
-    private OrderDB(int id, LocalDate orderDate, ArrayList<ItemDB> items) {
-        super(id, orderDate, items);
-    }
-
     public OrderDB(int id, LocalDate orderDate) {
         super(id, orderDate);
     }
 
-    public static Collection getCustomerOrders(int customerID) {    //rename to getAllCustomerOrders ?
+    public static OrderDB getCustomerOrder(Order order) {
+        throw new UnsupportedOperationException();  //!!!
+    }
+
+    public static Collection getAllCustomerOrders(int customerID) {
         ArrayList<OrderDB> orders = new ArrayList<OrderDB>();
         try {
             Connection con = DBManager.getConnection();
@@ -79,6 +79,9 @@ public class OrderDB extends Logic.Order {
     public static boolean submitCustomerOrder(Order order) throws SQLException {
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/lab1", "sqladmin", "truepassword1");
 
+    
+    public static boolean submitCustomerOrder(Order order) throws SQLException{
+        Connection con = null;
         PreparedStatement prepStatTOrder = null; //T_Order: | OrderID(pk) | UserID(fk,pk) | OrderDate | TotalCost (om vi ska ha den) |
         PreparedStatement prepStatTOrderItems = null; //T_OrderItems: | OrderID(fk,pk) | ItemID(fk,pk) | Amount |
         int orderID = -1;

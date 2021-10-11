@@ -18,7 +18,6 @@ public class Order {
 
     public int id;
     public LocalDate orderDate;
-    public ArrayList<ItemDB> items;
     public Map<ItemInfo, Integer> contMap;
     public Cart cart;
     public User user;
@@ -43,8 +42,12 @@ public class Order {
         this.orderDate = orderDate;
     }
 
-    public static Collection getCustomerOrders(User user) {
-        return OrderDB.getCustomerOrders(user.getUserID());
+    public static OrderDB getCustomerOrder(Order order) {
+        return OrderDB.getCustomerOrder(order);
+    }
+    
+    public static Collection getAllCustomerOrders(User user) {
+        return OrderDB.getAllCustomerOrders(user.getUserID());
     }
 
     public static boolean submitCustomerOrder(Order order) throws SQLException {
