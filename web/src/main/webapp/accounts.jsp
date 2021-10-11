@@ -74,6 +74,7 @@
                                 <button type="submit" name='editUserAccount' value="<%=user.getUserID()%>" > <i class="fa fa-pencil"></i></button>
                             </td>
                         </tr>
+                        <%}%>
                     </tbody>
                 </table>
             </form>         

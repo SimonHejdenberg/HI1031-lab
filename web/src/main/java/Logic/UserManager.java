@@ -57,9 +57,11 @@ public class UserManager {
 
     public static boolean EditUser(User user, String username, String password, SecurityLevel level) {
         try {
-            return UserDB.EditUser(user, username, password, level);
+            // return UserDB.EditUser(user, username, password, level);
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
     }
 

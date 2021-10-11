@@ -31,7 +31,7 @@
                 try {
                     UserInfo user = (UserInfo) session.getAttribute("user");
                     if (user != null && (user.getSecLevel() == SecurityLevel.Admin)) {%>
-            <a href="accunts.jsp"><i class="fa fa-fw fa-envelope"></i>Accounts</a>
+            <a href="accounts.jsp"><i class="fa fa-fw fa-envelope"></i>Accounts</a>
             <%
                     }
                 } catch (Exception e) {

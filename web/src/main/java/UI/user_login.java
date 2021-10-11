@@ -48,6 +48,10 @@ public class user_login extends HttpServlet {
 
         UserInfo user = new UserInfo(username, password);
         User retUser = UserManager.validateUser(user);
+        System.out.println("Password hash: " + password.hashCode());
+        System.out.println("UserInfo hash: " + user.getHashcode());
+        System.out.println("DB User username: " + retUser.getUsername());
+
         if (retUser != null) {
             UserInfo sessionUser = new UserInfo(retUser.getUserID(), retUser.getFirstname(), retUser.getLastname(), retUser.getUsername(), (SecurityLevel) retUser.getSecLevel());
             RequestDispatcher rd = request.getRequestDispatcher("store.jsp");

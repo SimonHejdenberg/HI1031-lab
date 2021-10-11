@@ -22,7 +22,7 @@
             <table style='width: 50%'>
                 <tr>
                     <td>Id</td>
-                    <td><input type="hidden" name="userId" value="<%=userToEdit.getUserID()%>"></td>
+                    <td><%=userToEdit.getUserID()%></td>
                 </tr>
 
                 <tr>
@@ -39,6 +39,7 @@
                 </tr>
             </table>
 
+            <input type="hidden" name="userId" value=""<%=userToEdit.getUserID()%>/>
             <input type="submit" value="Update"/>
 
             <button type="button" onclick="history.back()">Cancel</button>
