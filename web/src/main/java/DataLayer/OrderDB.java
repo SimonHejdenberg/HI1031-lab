@@ -89,21 +89,16 @@ public class OrderDB extends Logic.Order {
                 String categoryString = rs.getString("category");
                 Category category = Category.valueOf(categoryString);
                 String pictureUrl = rs.getString("url");
-                order.items.add(new ItemDB(id, name, price, description, quantity, category, pictureUrl));
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return order.items != null ? order : null;
+        return order != null ? order : null;
     }
 
     public static boolean submitCustomerOrder(Order order) throws SQLException {
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/lab1", "sqladmin", "truepassword1");
-
-    
-    public static boolean submitCustomerOrder(Order order) throws SQLException{
-        Connection con = null;
         PreparedStatement prepStatTOrder = null; //T_Order: | OrderID(pk) | UserID(fk) | OrderDate | TotalCost (om vi ska ha den) |
         PreparedStatement prepStatTOrderItems = null; //T_OrderItems: | OrderID(fk,pk) | ItemID(fk,pk) | Amount |
         int orderID = -1;
