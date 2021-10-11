@@ -5,7 +5,10 @@
  */
 package UI;
 
+import Enums.Category;
+import Logic.ItemHandler;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,8 +20,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author jemsann
  */
-@WebServlet(name = "product", urlPatterns = {"/product"})
-public class product extends HttpServlet {
+@WebServlet(name = "editProduct", urlPatterns = {"/editProduct"})
+public class editProduct extends HttpServlet {
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -45,10 +48,28 @@ public class product extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String product = (String) request.getParameter("editProductBtn");
-        RequestDispatcher rd = request.getRequestDispatcher("editProduct.jsp");
-        request.setAttribute("itemId", product);
-        rd.forward(request, response);
+        String productId = (String) request.getParameter("productId");
+        String productName = (String) request.getParameter("product_name");
+        String product_desc = (String) request.getParameter("product_desc");
+        String product_quantity = (String) request.getParameter("product_quantity");
+        String product_price = (String) request.getParameter("product_price");
+        String product_category = (String) request.getParameter("product_category");
+        String product_url = (String) request.getParameter("product_url");
+
+        Category cat = Category.valueOf(product_category);
+        ItemInfo original_product = ItemHandler.getItem(Integer.parseInt(productId));
+        if (original_product.getId() == Integer.parseInt(productId)) {
+            ItemInfo updated_product = new ItemInfo(Integer.parseInt(productId), productName, Double.parseDouble(product_price), product_desc, Integer.parseInt(product_quantity), cat, product_url);
+            boolean status = ItemHandler.UpdateProduct(updated_product);
+            RequestDispatcher rd = request.getRequestDispatcher("warehouse.jsp");
+            request.setAttribute("successful", status);
+            rd.forward(request, response);
+        } else {
+            RequestDispatcher rd = request.getRequestDispatcher("warehouse.jsp");
+            request.setAttribute("successful", "false");
+            rd.forward(request, response);
+        }
+
     }
 
     /**

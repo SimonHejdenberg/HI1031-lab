@@ -18,11 +18,11 @@
     </head>
     <body>
         <h1>Edit item <%=product.getName()%></h1>
-        <form action="edit-product" method="POST">
+        <form action="editProduct" method="POST">
             <table style="width: 50%">
                 <tr>
                     <td>Id</td>
-                    <td><%=product.id%></td>
+                    <td><input type="hidden" name="productId" value="<%=product.getId()%>"></td>
                 </tr>
                 <tr>
                     <td>Product Name</td>
@@ -30,26 +30,29 @@
                 </tr>
                 <tr>
                     <td>Description</td>
-                    <td><input type="text" name="product_name" value="<%=product.description%>"/></td>
+                    <td><input type="text" name="product_desc" value="<%=product.description%>"/></td>
                 </tr>
                 <tr>
                     <td>Quantity</td>
-                    <td><input type="text" name="product_name" value="<%=product.quantity%>"/></td>
+                    <td><input type="text" name="product_quantity" value="<%=product.quantity%>"/></td>
                 </tr>
                 <tr>
                     <td>Price</td>
-                    <td><input type="text" name="product_name" value="<%=product.price%>"/></td>
+                    <td><input type="text" name="product_price" value="<%=product.price%>"/></td>
                 </tr>
                 <tr>
                     <td>Category</td>
-                    <td><input type="text" name="product_name" value="<%=product.category%>"/></td>
+                    <td><input type="text" name="product_category" value="<%=product.category%>"/></td>
                 </tr>
                 <tr>
                     <td>Picture</td>
-                    <td><input type="text" name="product_name" value="<%=product.pictureUrl%>"/></td>
-                </tr>´
+                    <td><input type="text" name="product_url" value="<%=product.pictureUrl%>"/></td>
+                </tr>
             </table>
-            <input type="submit" value="Submit" />
-    </form>
-</body>
+        
+            <input type="submit" value="Update" />
+
+            <button type="button" onclick="history.back()">Cancel</button>
+        </form>
+    </body>
 </html>
