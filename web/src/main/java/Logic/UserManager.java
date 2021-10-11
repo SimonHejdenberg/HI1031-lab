@@ -48,8 +48,14 @@ public class UserManager {
 
     public static UserInfo GetUser(int id) {
         if (users != null) {
-            UserInfo user = users.get(id - 1);
-            return user;
+            Iterator<UserInfo> it = users.iterator();
+            while (it.hasNext()) {
+                UserInfo u = it.next();
+                if (u.getUserID() == id) {
+                    return u;
+                }
+            }
+            return null;
         } else {
             return null;
         }
@@ -57,8 +63,8 @@ public class UserManager {
 
     public static boolean EditUser(User user, String username, String password, SecurityLevel level) {
         try {
-            // return UserDB.EditUser(user, username, password, level);
-            return true;
+            return UserDB.editUser(user, username, password, level);
+            //return true;
         } catch (Exception e) {
             e.printStackTrace();
             return false;

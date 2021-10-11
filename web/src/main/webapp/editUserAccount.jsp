@@ -4,6 +4,7 @@
     Author     : jemsann
 --%>
 
+<%@page import="Enums.SecurityLevel"%>
 <%@page import="Logic.UserManager"%>
 <%@page import="UI.UserInfo"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -18,7 +19,7 @@
     </head>
     <body>
         <h1>Edit account <%=userToEdit.getUsername()%></h1>
-        <form action ='editAccount' method='POST'>
+        <form action ='adminedituser' method='POST'>
             <table style='width: 50%'>
                 <tr>
                     <td>Id</td>
@@ -31,7 +32,12 @@
                 </tr>
                 <tr>
                     <td>Security Level</td>
-                    <td><input type="text" name="secLevel" value="<%=userToEdit.getSecLevel()%>"/></td>
+                    <td> <select  name="secLevel">
+                            <option  <% if (userToEdit.getSecLevel().toString() == "Customer") {%> selected <%}%> value="<%=SecurityLevel.Customer%>"  >Customer</option>
+                            <option  <% if (userToEdit.getSecLevel().toString() == "Staff") {%> selected <%}%> value="<%=SecurityLevel.Staff%>">Staff</option>
+                            <option  <% if (userToEdit.getSecLevel().toString() == "Admin") {%> selected <%}%> value="<%=SecurityLevel.Admin%>">Admin</option>
+                        </select> </td>
+                   
                 </tr>
                 <tr>
                     <td>Password</td>
@@ -39,8 +45,8 @@
                 </tr>
             </table>
 
-            <input type="hidden" name="userId" value=""<%=userToEdit.getUserID()%>/>
-            <input type="submit" value="Update"/>
+            <input type="hidden" name="userId" value="<%=userToEdit.getUserID()%>"/>
+            <input type="submit" value="Update" />
 
             <button type="button" onclick="history.back()">Cancel</button>
 

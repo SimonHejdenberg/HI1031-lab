@@ -21,8 +21,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author jemsann
  */
-@WebServlet(name = "editAccount", urlPatterns = {"/editAccount"})
-public class editAccount extends HttpServlet {
+@WebServlet(name = "adminedituser", urlPatterns = {"/adminedituser"})
+public class adminedituser extends HttpServlet {
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -52,9 +52,18 @@ public class editAccount extends HttpServlet {
         String userId = (String) request.getParameter("userId");
         String username = (String) request.getParameter("username");
         String seclevel = (String) request.getParameter("secLevel");
-        String password = (String) request.getParameter("password");
+        String password;
+        if (request.getParameter("password") != null) {
+            password = (String) request.getParameter("password");
+        } else {
+            password = null;
+        }
+
+        System.out.println(seclevel);
 
         SecurityLevel newLevel = SecurityLevel.valueOf(seclevel);
+        System.out.println(newLevel.toString());
+
         User original_user = UserManager.GetUser(Integer.parseInt(userId));
         boolean status = UserManager.EditUser(original_user, username, password, newLevel);
 
