@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author jemsann
  */
 @WebServlet(name = "user_edit", urlPatterns = {"/user_edit"})
-public class user_edit extends HttpServlet {
+public class account_edit extends HttpServlet {
 
     /**
      * Handles the HTTP <code>GET</code> method.

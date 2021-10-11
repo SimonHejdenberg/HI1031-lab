@@ -24,7 +24,7 @@
             <div><h1>Unsuccessful!</h1></div>
             <%}
                 }%>
-            <form action="user_edit" method="post">
+            <form action="account_edit" method="post">
                 <table>
                     <thead>
                         <tr>
