@@ -20,13 +20,25 @@
                 try {
                     UserInfo user = (UserInfo) session.getAttribute("user");
                     if (user != null && (user.getSecLevel() == SecurityLevel.Admin || user.getSecLevel() == SecurityLevel.Staff)) {%>
-                            <a href="warehouse.jsp"><i class="fa fa-fw fa-envelope"></i>Warehouse</a>
-                            <%
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
+            <a href="warehouse.jsp"><i class="fa fa-fw fa-envelope"></i>Warehouse</a>
+            <%
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             %>
+            <%
+                try {
+                    UserInfo user = (UserInfo) session.getAttribute("user");
+                    if (user != null && (user.getSecLevel() == SecurityLevel.Admin)) {%>
+            <a href="accunts.jsp"><i class="fa fa-fw fa-envelope"></i>Accounts</a>
+            <%
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            %>
+
             <div>
                 <a href="loginmanager.jsp"><i class="fa fa-fw fa-user"></i></a>
                 <a href="cart.jsp"><i class="fa fa-shopping-cart" aria-hidden="true"></i>Cart</a>

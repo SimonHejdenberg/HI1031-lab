@@ -1,11 +1,11 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package UI;
 
-import Enums.SecurityLevel;
-import Logic.Customer;
-import Logic.UserManager;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author jemsann
  */
-@WebServlet(name = "user_register", urlPatterns = {"/user_register"})
-public class user_register extends HttpServlet {
+@WebServlet(name = "user_edit", urlPatterns = {"/user_edit"})
+public class user_edit extends HttpServlet {
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -31,6 +31,7 @@ public class user_register extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        doPost(request, response);
     }
 
     /**
@@ -44,29 +45,10 @@ public class user_register extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String firstname = request.getParameter("first_name");
-        String lastname = request.getParameter("last_name");
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        SecurityLevel securitylevel = SecurityLevel.Customer;
-
-        Customer customer = new Customer(firstname, lastname, username, password, securitylevel);
-        int userID = UserManager.registerNewUser(customer);
-        System.out.println("user_register: " + customer.hashCode());
-        if (userID > -1) {
-            RequestDispatcher rd = request.getRequestDispatcher("store.jsp");
-            request.getSession().setAttribute("username", customer.getUsername());
-            rd.forward(request, response);
-        } else {
-            Map<String, String> messages = new HashMap<String, String>();
-            request.setAttribute("messages", messages);
-            if (userID == -1) {
-                messages.put("userID", "Server error");
-            }
-
-            request.getRequestDispatcher("/signup.jsp").forward(request, response);
-        }
-
+        String userID = (String) request.getParameter("editUserAccount");
+        RequestDispatcher rd = request.getRequestDispatcher("editAccount.jsp");
+        request.setAttribute("userId", userID);
+        rd.forward(request, response);
     }
 
     /**

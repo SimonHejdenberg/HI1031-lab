@@ -45,7 +45,6 @@ public class product extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         String product = (String) request.getParameter("editProductBtn");
         RequestDispatcher rd = request.getRequestDispatcher("editProduct.jsp");
         request.setAttribute("itemId", product);

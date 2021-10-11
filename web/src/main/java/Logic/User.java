@@ -2,6 +2,7 @@ package Logic;
 
 import DataLayer.UserDB;
 import Enums.SecurityLevel;
+import java.util.Collection;
 import java.util.Objects;
 
 /**
@@ -13,7 +14,7 @@ public class User {
     private int userID = -1;    //????????
     private String firstname, lastname, username, password;  // password HASHning mot DB, dvs vi tar psw, kör hash funktin, skickar hash till DB?
     private SecurityLevel seclevel = null;   //kanske inte funkar med enums i sql. DOCK så har mysql en enumtyp https://dev.mysql.com/doc/refman/8.0/en/enum.html
-    int hashcode;
+    private int hashcode;
     Cart cart = null;
 
     public User(int userId, String firstname, String lastname, String username, SecurityLevel level) {
@@ -30,33 +31,32 @@ public class User {
         this.username = username;
         this.password = password;
         this.seclevel = seclevel;
-        this.hashcode = hashCode();
+        this.hashcode = password.hashCode();
         //inga getters eller setters för psw eller seclevel
     }
 
     protected User(String username, String password) {
         this.username = username;
         this.password = password;
-        this.hashcode = hashCode();
+        this.hashcode = password.hashCode();
+    }
+
+    public static Collection GetAllUsers() {
+        return UserDB.GetAllUsers();
     }
 
     public int getHashcode() {
+        
         return hashcode;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 59 * hash + Objects.hashCode(this.password);
-        return hash;
-    }
-
+    /*
     public static boolean validateUser(String username, String password, int hashInput) {
         User u = new User(username, password);
-        int hash = u.hashCode();
+        int hash = password.hashCode();
         return true;
     }
-
+     */
     /**
      * @return the userID
      */
@@ -99,8 +99,8 @@ public class User {
         }
         return cart;
     }
-    
-    public SecurityLevel getSecLevel(){
+
+    public SecurityLevel getSecLevel() {
         return seclevel;
     }
 

@@ -132,9 +132,19 @@ public class ItemDB extends Logic.Item {
         try ( Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/lab1", "sqladmin", "truepassword1")) {
             // try ( Connection conn = DBManager.getConnection()) {
 
-            String sql = "UPDATE t_orderitems SET name=? price=? description=? quantity=? category=? url=?  WHERE (OrderID = ?) and (ItemID = ?);";
+            String sql = "UPDATE t_items SET name=?, price=?, description=?, quantity=?, category=?, url=?  WHERE (id = ?);";
             try ( PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setString(1, item.getName());
+                stmt.setDouble(2, item.getPrice());
+                stmt.setString(3, item.getDescription());
+                stmt.setInt(4, item.getQuantity());
+                stmt.setString(5, item.getCategory().toString());
+                stmt.setString(6, item.getPictureUrl());
+                stmt.setInt(7, item.getId());               
+                
+                
                 int id = stmt.executeUpdate();
+                
                 if (id >= 0) {
                     return true;
                 }

@@ -47,7 +47,7 @@ public class user_login extends HttpServlet {
         String password = request.getParameter("password");
 
         UserInfo user = new UserInfo(username, password);
-        User retUser = UserManager.validateUser(user);;
+        User retUser = UserManager.validateUser(user);
         if (retUser != null) {
             UserInfo sessionUser = new UserInfo(retUser.getUserID(), retUser.getFirstname(), retUser.getLastname(), retUser.getUsername(), (SecurityLevel) retUser.getSecLevel());
             RequestDispatcher rd = request.getRequestDispatcher("store.jsp");

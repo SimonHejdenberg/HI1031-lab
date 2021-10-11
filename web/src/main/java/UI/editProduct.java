@@ -5,6 +5,7 @@
  */
 package UI;
 
+import Enums.Category;
 import Logic.ItemHandler;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -48,13 +49,26 @@ public class editProduct extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String productId = (String) request.getParameter("productId");
-        ItemInfo product = ItemHandler.getItem(Integer.parseInt(productId));
+        String productName = (String) request.getParameter("product_name");
+        String product_desc = (String) request.getParameter("product_desc");
+        String product_quantity = (String) request.getParameter("product_quantity");
+        String product_price = (String) request.getParameter("product_price");
+        String product_category = (String) request.getParameter("product_category");
+        String product_url = (String) request.getParameter("product_url");
 
-        boolean status = ItemHandler.UpdateProduct(product);
-        
-        RequestDispatcher rd = request.getRequestDispatcher("warehouse.jsp");
-        request.setAttribute("successful", status);
-        rd.forward(request, response);
+        Category cat = Category.valueOf(product_category);
+        ItemInfo original_product = ItemHandler.getItem(Integer.parseInt(productId));
+        if (original_product.getId() == Integer.parseInt(productId)) {
+            ItemInfo updated_product = new ItemInfo(Integer.parseInt(productId), productName, Double.parseDouble(product_price), product_desc, Integer.parseInt(product_quantity), cat, product_url);
+            boolean status = ItemHandler.UpdateProduct(updated_product);
+            RequestDispatcher rd = request.getRequestDispatcher("warehouse.jsp");
+            request.setAttribute("successful", status);
+            rd.forward(request, response);
+        } else {
+            RequestDispatcher rd = request.getRequestDispatcher("warehouse.jsp");
+            request.setAttribute("successful", "false");
+            rd.forward(request, response);
+        }
 
     }
 
