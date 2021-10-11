@@ -7,6 +7,7 @@ package UI;
 
 import Enums.SecurityLevel;
 import Logic.Customer;
+import Logic.User;
 import Logic.UserManager;
 import java.io.IOException;
 import java.util.HashMap;
@@ -50,29 +51,16 @@ public class user_edit extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //String username = request.getParameter("username");
-        String password = request.getParameter("new_password");
-        SecurityLevel securitylevel = ((UserInfo) request.getSession().getAttribute("user")).getSecLevel();
         
+        String newUsername = null;
+        //newUsername = request.getParameter("new_username");
         
-        /*
-        Customer customer = new Customer(firstname, lastname, username, password, securitylevel);
-        int userID = UserManager.registerNewUser(customer);
-        System.out.println("user_register: " + customer.hashCode());
-        if (userID > -1) {
-            RequestDispatcher rd = request.getRequestDispatcher("store.jsp");
-            request.getSession().setAttribute("username", customer.getUsername());
-            rd.forward(request, response);
-        } else {
-            Map<String, String> messages = new HashMap<String, String>();
-            request.setAttribute("messages", messages);
-            if (userID == -1) {
-                messages.put("userID", "Server error");
-            }
-
-            request.getRequestDispatcher("/signup.jsp").forward(request, response);
-        }
-        */
+        String newPassword = request.getParameter("new_password");
+        
+        SecurityLevel newSecurityLevel = null;
+        //newSecurityLevel = request.getParameter(new_securitylevel);
+        
+        UserManager.EditUser((User)request.getSession().getAttribute("user"), newUsername, newPassword, newSecurityLevel);
     }
 
     /**

@@ -34,12 +34,12 @@
                     <tr>
                         <td>Change email</td>
                         <td><input type="text" name="new_email" /></td>
-                        <td><button ><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></td>
+                        <td><button type="submit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></td>
                     </tr>
                     <tr>
                         <td>Change password</td>
                         <td><input type="password" name="new_password" /></td>
-                        <td><button ><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></td>
+                        <td><button type="submit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></td>
                     </tr>
                 </table>
                 <span class="error" style="color:red">${messages.userID}</span>
