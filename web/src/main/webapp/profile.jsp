@@ -29,19 +29,21 @@
                 <table style="width: 20%">
                     <tr>
                         <td>Username: </td>
-                        <p><%=username%></p>
+                        <td><p><%=username%></p></td>
                     </tr>
                     <tr>
                         <td>Change email</td>
-                        <td><input type="text" name="email" /></td>
+                        <td><input type="text" name="new_email" /></td>
+                        <td><button ><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></td>
                     </tr>
                     <tr>
                         <td>Change password</td>
-                        <td><input type="password" name="password" /></td>
+                        <td><input type="password" name="new_password" /></td>
+                        <td><button ><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></td>
                     </tr>
                 </table>
                 <span class="error" style="color:red">${messages.userID}</span>
-                <input type="submit" value="Save" />
+                <%--<input type="submit" value="Save" />--%>
                 <input type="submit" value="Log out" />
             </form>
         </div>

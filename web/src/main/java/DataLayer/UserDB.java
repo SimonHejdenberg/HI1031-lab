@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *
@@ -50,6 +52,63 @@ public class UserDB extends Logic.User {
             System.out.println(outerSqlEx.getErrorCode());
         }
         return userID;
+    }
+    
+    public static boolean editUser(User user, String newUsername, String newPassword, SecurityLevel newSecurityLevel) throws IOException, SQLException {
+        if (newUsername == null && newPassword == null && newSecurityLevel == null) {
+            return false;
+        }
+        try ( Connection con = DBManager.getConnection()) {
+            
+            StringBuilder sqlbBuilder = new StringBuilder();
+            
+            sqlbBuilder.append("UPDATE t_user SET ");
+            int arrayCounter = 1;
+            int usernameIndex = -1, passwordIndex = -1, securityIndex = -1;
+            
+            if (!(newUsername == null || user.getUsername().equals(newUsername))) {
+                sqlbBuilder.append("username = ?");
+                usernameIndex = arrayCounter;
+                arrayCounter++;
+                if (!(newPassword == null || newSecurityLevel == null || user.getSecLevel().equals(newSecurityLevel))) {
+                    sqlbBuilder.append(", ");
+                }
+            }
+            if (!(newPassword == null)) {
+                sqlbBuilder.append("hash = ?");
+                passwordIndex = arrayCounter;
+                arrayCounter++;
+                if (!(newSecurityLevel == null || user.getSecLevel().equals(newSecurityLevel))) {
+                    sqlbBuilder.append(", ");
+                }
+            }
+            if (!(newSecurityLevel == null || user.getSecLevel().equals(newSecurityLevel))) {
+                sqlbBuilder.append("securitylevel = ?");
+                securityIndex = arrayCounter;
+                arrayCounter++;
+            }
+            
+            sqlbBuilder.append(" WHERE userID = ?;");
+            
+            PreparedStatement stmt = con.prepareStatement(sqlbBuilder.toString());
+            
+            if (!(usernameIndex == -1)) {
+                stmt.setString(usernameIndex, newUsername);
+            }
+            if (!(passwordIndex == -1)) {
+                stmt.setInt(passwordIndex, newPassword.hashCode());
+            }
+            if (!(securityIndex == -1)) {
+                stmt.setInt(arrayCounter, newSecurityLevel.ordinal());
+            }
+            stmt.setInt(arrayCounter, user.getUserID());
+            
+            return (stmt.executeUpdate() > 0);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public static boolean ValidateUser(String username, int password) {

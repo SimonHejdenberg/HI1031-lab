@@ -29,29 +29,51 @@ public class OrderDB extends Logic.Order {
     }
 
     public static OrderDB getCustomerOrder(Order order) {
-        throw new UnsupportedOperationException();  //!!!
-    }
-
-    public static Collection getAllCustomerOrders(int customerID) {
-        ArrayList<OrderDB> orders = new ArrayList<OrderDB>();
         try {
             Connection con = DBManager.getConnection();
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM T_ORDER WHERE CustomerID = " + customerID);
+        } catch (Exception e) {
+        }
+        return null;
+    }
+    
+    //String sql = "SELECT * FROM t_review, t_book WHERE UserID = ? AND t_review.BookID = t_book.BookID";
+    /*
+        String sql = "SELECT * FROM db_bookstore.t_book "
+            + "WHERE BookID IN "
+            + "(SELECT BookID from db_bookstore.t_created "
+            + "WHERE AuthorID IN "
+            + "(SELECT AuthorID from db_bookstore.t_author WHERE firstName LIKE ? OR lastName LIKE ?));";
+    */
+    
+    public static Collection getAllCustomerOrders(int customerID) {
+        try {
+            Connection con = DBManager.getConnection();
+            con.setAutoCommit(false);
+            String sqlTOrder = "SELECT * FROM T_ORDERITEMS WHERE ORDERID IN ("
+                    + "SELECT ORDERID FROMT T_ORDER WHERE USERID = ?) ORDER BY ORDERID ASC";
+            PreparedStatement prepStatTOrder = con.prepareStatement(sqlTOrder);
+            prepStatTOrder.setInt(1, customerID);
+            
+            ResultSet rs = prepStatTOrder.executeQuery();
+            
+            ArrayList<OrderDB> orders = new ArrayList<OrderDB>();
+            
 
-            int id = rs.getInt("id");
-            Date orderDate = rs.getDate("orderdate");
-            orders.add(new OrderDB(id, convertToLocalDate(orderDate)));
-
-        } catch (SQLException e) {
+            while (rs.next()) {
+                if (orders.size() > 0 && rs.getInt(1)==orders.get(orders.size()-1).getId()) {
+                    //orders.get(orders.size()-1).getContMap().put(
+                    //        new ItemInfo(rs.getInt(2), sqlTOrder, count, Category.Android, sqlTOrder), )
+                }
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return orders;
+        return null;
     }
     
     public static boolean submitCustomerOrder(Order order) throws SQLException{
         Connection con = null;
-        PreparedStatement prepStatTOrder = null; //T_Order: | OrderID(pk) | UserID(fk,pk) | OrderDate | TotalCost (om vi ska ha den) |
+        PreparedStatement prepStatTOrder = null; //T_Order: | OrderID(pk) | UserID(fk) | OrderDate | TotalCost (om vi ska ha den) |
         PreparedStatement prepStatTOrderItems = null; //T_OrderItems: | OrderID(fk,pk) | ItemID(fk,pk) | Amount |
         int orderID = -1;
         try {
