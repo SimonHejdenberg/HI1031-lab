@@ -17,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author jemsann
  */
-@WebServlet(name = "user_edit", urlPatterns = {"/user_edit"})
-public class account_edit extends HttpServlet {
+@WebServlet(name = "adminaccountsedit", urlPatterns = {"/adminaccountsedit"})
+public class adminaccountsedit extends HttpServlet {
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -46,7 +46,7 @@ public class account_edit extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String userID = (String) request.getParameter("editUserAccount");
-        RequestDispatcher rd = request.getRequestDispatcher("editAccount.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("editUserAccount.jsp");
         request.setAttribute("userId", userID);
         rd.forward(request, response);
     }
