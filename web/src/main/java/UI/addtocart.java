@@ -67,8 +67,8 @@ public class addtocart extends HttpServlet {
         Collection<ItemInfo> c = ItemHandler.getItems();
         for (ItemInfo i : c) {
             if (i.getId() == Integer.parseInt(id)) {
-                ItemInfo revItem = new ItemInfo(i.getId(), i.getName(), i.getPrice(), i.getDescription(), i.getQuantity(), i.getCategory(), i.getPictureUrl());
-                tempCart.addItem(revItem, 1);
+                tempCart.setTotal(i.getPrice());
+                tempCart.addItem(i.getId(), 1);
                 System.out.println("added " + i.getId());
             }
         }

@@ -30,7 +30,7 @@ public class UserDB extends Logic.User {
     public static int AddNewUser(User user) throws IOException, SQLException {
         String addUserString = "INSERT INTO t_users (firstname,lastname, username, hash, securitylevel) VALUES(?,?,?,?,?);";
         int userID = -1;
-        try ( Connection con = DBManager.getConnection()) {
+        try ( Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/lab1", "sqladmin", "truepassword1")) {
 
             try ( PreparedStatement addUserStmt = con.prepareStatement(addUserString)) {
                 addUserStmt.setString(1, user.getFirstname());
@@ -58,19 +58,19 @@ public class UserDB extends Logic.User {
         }
         return userID;
     }
-    
+
     public static boolean editUser(User user, String newUsername, String newPassword, SecurityLevel newSecurityLevel) throws IOException, SQLException {
         if (newUsername == null && newPassword == null && newSecurityLevel == null) {
             return false;
         }
-        try ( Connection con = DBManager.getConnection()) {
-            
+        try ( Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/lab1", "sqladmin", "truepassword1")) {
+
             StringBuilder sqlbBuilder = new StringBuilder();
-            
-            sqlbBuilder.append("UPDATE t_user SET ");
+
+            sqlbBuilder.append("UPDATE t_users SET ");
             int arrayCounter = 1;
             int usernameIndex = -1, passwordIndex = -1, securityIndex = -1;
-            
+
             if (!(newUsername == null || user.getUsername().equals(newUsername))) {
                 sqlbBuilder.append("username = ?");
                 usernameIndex = arrayCounter;
@@ -79,7 +79,7 @@ public class UserDB extends Logic.User {
                     sqlbBuilder.append(", ");
                 }
             }
-            if (!(newPassword == null)) {
+            if (!(newPassword == null || newPassword.isEmpty())) {
                 sqlbBuilder.append("hash = ?");
                 passwordIndex = arrayCounter;
                 arrayCounter++;
@@ -92,11 +92,11 @@ public class UserDB extends Logic.User {
                 securityIndex = arrayCounter;
                 arrayCounter++;
             }
-            
-            sqlbBuilder.append(" WHERE userID = ?;");
-            
+
+            sqlbBuilder.append(" WHERE id = ?;");
+
             PreparedStatement stmt = con.prepareStatement(sqlbBuilder.toString());
-            
+
             if (!(usernameIndex == -1)) {
                 stmt.setString(usernameIndex, newUsername);
             }
@@ -104,11 +104,17 @@ public class UserDB extends Logic.User {
                 stmt.setInt(passwordIndex, newPassword.hashCode());
             }
             if (!(securityIndex == -1)) {
-                stmt.setInt(arrayCounter, newSecurityLevel.ordinal());
+                stmt.setInt(securityIndex, newSecurityLevel.ordinal());
+                System.out.println("sec level " + newSecurityLevel.ordinal());
             }
+
             stmt.setInt(arrayCounter, user.getUserID());
-            
-            return (stmt.executeUpdate() > 0);
+
+            System.out.println("arraycounter " + sqlbBuilder.toString());
+
+            System.out.println("SQL " + sqlbBuilder.toString());
+            int returnValue = stmt.executeUpdate();
+            return (returnValue > 0);
 
         } catch (Exception e) {
             e.printStackTrace();

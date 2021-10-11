@@ -1,3 +1,7 @@
+<%@page import="java.util.Iterator"%>
+<%@page import="Logic.ItemHandler"%>
+<%@page import="java.util.Collection"%>
+<%@page import="java.util.Collection"%>
 <%@page import="java.util.Set"%>
 <%@page import="UI.ItemInfo"%>
 <%@page import="java.util.Map"%>
@@ -11,10 +15,14 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="css/main.css" type="text/css"/>
         <%Cart cart = null;
-            Set<Map.Entry<ItemInfo, Integer>> set = null;%>
+            Set<Map.Entry<Integer, Integer>> set = null;
+            Collection c;
+            Iterator<ItemInfo> it=null;%>
         <%if (session.getAttribute("cart") != null) {
                 cart = ((Cart) session.getAttribute("cart"));
                 set = cart.getContMapCopy().entrySet();
+                c = ItemHandler.getItems();
+                it = c.iterator();
             } else {
                 cart = new Cart();
             }%>
@@ -28,13 +36,21 @@
             <h1>Cart</h1>
             <%if (set != null) {%> 
             <div class='flex-container'>
-                <%for (Map.Entry<ItemInfo, Integer> entry : set) {
-                        ItemInfo k = entry.getKey();
-                        int amount = entry.getValue();%>
-                <p>Name<%=k.getName()%></p>
-                <p>Price <%=k.getPrice()%></p>
+                <%for (Map.Entry<Integer, Integer> entry : set) {
+                        int itemId = entry.getKey();
+                        int amount = entry.getValue();
+                        while (it.hasNext()&&it!=null) {
+                            ItemInfo item = it.next();
+                            if (itemId == item.getId()) {
+                %>
+                <p>Name: <%=item.getName()%></p>
+                <p>Price: <%=item.getPrice()%></p>
+                <p>Description <%=item.getDescription()%></p>
                 <p>Amount <%=amount%></p>
-                <%}%>
+                <%
+                            }
+                        }
+                    }%>
             </div>
             <%}%>
 

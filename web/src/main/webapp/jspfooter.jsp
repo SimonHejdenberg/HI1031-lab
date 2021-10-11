@@ -12,20 +12,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <div class="footer-basic">
         <footer>
-            <div class="social">
-                <a href="#"><i class="icon ion-social-instagram"></i></a>
-                <a href="#"><i class="icon ion-social-snapchat"></i></a>
-                <a href="#"><i class="icon ion-social-twitter"></i></a>
-                <a href="#"><i class="icon ion-social-facebook"></i></a>
-            </div>
+
             <ul class="list-inline">
-                <li class="list-inline-item"><a href="#">Home</a></li>
-                <li class="list-inline-item"><a href="#">Services</a></li>
-                <li class="list-inline-item"><a href="#">About</a></li>
-                <li class="list-inline-item"><a href="#">Terms</a></li>
-                <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
+                <li class="list-inline-item"><a href="index.jsp">Home</a></li>
+                <li class="list-inline-item"><a href="store.jsp">Store</a></li>
+
             </ul>
-            <p class="copyright">Company Name © 2018</p>
+            <p class="copyright">JT & SH © 2021</p>
         </footer>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

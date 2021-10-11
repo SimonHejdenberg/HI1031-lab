@@ -57,14 +57,19 @@ public class adminedituser extends HttpServlet {
             password = (String) request.getParameter("password");
         } else {
             password = null;
+            System.out.println(password);
         }
 
-        System.out.println(seclevel);
-
         SecurityLevel newLevel = SecurityLevel.valueOf(seclevel);
-        System.out.println(newLevel.toString());
+        System.out.println("new sec " + newLevel.toString());
+        System.out.println("new sec " + newLevel.ordinal());
+
+        System.out.println("new username " + username.toString());
 
         User original_user = UserManager.GetUser(Integer.parseInt(userId));
+        System.out.println("orig " + original_user.getSecLevel());
+        System.out.println("orig username " + original_user.getUsername());
+
         boolean status = UserManager.EditUser(original_user, username, password, newLevel);
 
         RequestDispatcher rd = request.getRequestDispatcher("accounts.jsp");

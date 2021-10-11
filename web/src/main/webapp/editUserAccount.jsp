@@ -37,11 +37,11 @@
                             <option  <% if (userToEdit.getSecLevel().toString() == "Staff") {%> selected <%}%> value="<%=SecurityLevel.Staff%>">Staff</option>
                             <option  <% if (userToEdit.getSecLevel().toString() == "Admin") {%> selected <%}%> value="<%=SecurityLevel.Admin%>">Admin</option>
                         </select> </td>
-                   
+
                 </tr>
                 <tr>
                     <td>Password</td>
-                    <td><input type="text" name="password" value="Enter new password"/></td>
+                    <td><input type="text" name="password" placeholder="Enter new password"/></td>
                 </tr>
             </table>
 

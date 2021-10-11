@@ -18,6 +18,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -26,7 +27,6 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "user_edit", urlPatterns = {"/user_edit"})
 public class user_edit extends HttpServlet {
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -51,16 +51,25 @@ public class user_edit extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
-        String newUsername = null;
-        //newUsername = request.getParameter("new_username");
-        
-        String newPassword = request.getParameter("new_password");
-        
-        SecurityLevel newSecurityLevel = null;
-        //newSecurityLevel = request.getParameter(new_securitylevel);
-        
-        UserManager.EditUser((User)request.getSession().getAttribute("user"), newUsername, newPassword, newSecurityLevel);
+
+        if (request.getParameter("logout") != null) {
+            HttpSession ses = request.getSession();
+            ses.invalidate();
+            
+            System.out.println("removed");
+        } else {
+            String newUsername = null;
+            //newUsername = request.getParameter("new_username");
+
+            String newPassword = request.getParameter("new_password");
+
+            SecurityLevel newSecurityLevel = null;
+            //newSecurityLevel = request.getParameter(new_securitylevel);
+
+            UserManager.EditUser((User) request.getSession().getAttribute("user"), newUsername, newPassword, newSecurityLevel);
+        }
+
+        request.getRequestDispatcher("profile.jsp").forward(request, response);
     }
 
     /**

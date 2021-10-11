@@ -18,7 +18,7 @@ public class Order {
 
     public int id;
     public LocalDate orderDate;
-    public Map<ItemInfo, Integer> contMap;
+    public Map<Integer, Integer> contMap;
     public Cart cart;
     public User user;
 
@@ -69,7 +69,7 @@ public class Order {
         this.orderDate = orderDate;
     }
 
-    public Map<ItemInfo, Integer> getContMap() {
+    public Map<Integer, Integer> getContMap() {
         return contMap;
     }
 
@@ -81,8 +81,8 @@ public class Order {
     }
             
 
-    public Map<ItemInfo, Integer> getContMapCopy() {
-        Map<ItemInfo, Integer> contMapCopy = new HashMap<>();
+    public Map<Integer, Integer> getContMapCopy() {
+        Map<Integer, Integer> contMapCopy = new HashMap<>();
         contMapCopy.putAll(contMap);
         return contMapCopy;
     }

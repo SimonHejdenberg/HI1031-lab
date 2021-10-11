@@ -19,7 +19,7 @@ import java.util.Set;
 public class Cart implements Cloneable {
 
     private User user;
-    private Map<ItemInfo, Integer> contMap = null;  //ItemID, amount
+    private Map<Integer, Integer> contMap = null;  //ItemID, amount
     public double total;
 
     public Cart(User user) {
@@ -29,7 +29,7 @@ public class Cart implements Cloneable {
     }
 
     //Går inte att använda egentligen, eftersom contents måste ge en totalsumma! 
-    public Cart(User user, Map<ItemInfo, Integer> contents, int totalCost) {
+    public Cart(User user, Map<Integer, Integer> contents, int totalCost) {
         this.user = user;
         this.contMap = new HashMap<>();
         this.contMap.putAll(contents);
@@ -61,25 +61,31 @@ public class Cart implements Cloneable {
     /**
      * @return the contents
      */
-    public Map<ItemInfo, Integer> getContMap() {
+    public Map<Integer, Integer> getContMap() {
         return contMap;
     }
 
-    public Map<ItemInfo, Integer> getContMapCopy() {
-        Map<ItemInfo, Integer> contMapCopy = new HashMap<>();
+    public Map<Integer, Integer> getContMapCopy() {
+        Map<Integer, Integer> contMapCopy = new HashMap<>();
         contMapCopy.putAll(contMap);
         return contMapCopy;
     }
 
-    public void addItem(ItemInfo item, Integer amount) {
+    public void addItem(Integer item, Integer amount) {
         if (contMap != null) {
-            total += item.getPrice() * amount;
-            int currentAmount = contMap.containsKey(item) ? contMap.get(amount) : 0;
-            contMap.put(item, currentAmount + amount);
+            System.out.println("adding! " + total);
+            if (contMap.containsKey(item)) {
+                System.out.println("I exists");
+                int value = contMap.get(item);
+                contMap.put(item, value + amount);
+            } else {
+                System.out.println("I exist now!");
+                contMap.put(item, amount);
+            }
         }
     }
 
-    public void removeItem(ItemInfo item, Integer amount) {
+    public void removeItem(Integer item, Integer amount) {
         if (contMap != null && contMap.containsKey(item)) {
             int currentAmount = contMap.get(item);
             if (currentAmount - amount > 0) {
@@ -87,7 +93,6 @@ public class Cart implements Cloneable {
             } else {
                 contMap.remove(item);
             }
-            total -= item.getPrice() * amount;
         }
     }
 
@@ -99,19 +104,8 @@ public class Cart implements Cloneable {
         contMap.clear();
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        try {
-            Set<ItemInfo> keySet = getContMap().keySet();
-            Iterator<ItemInfo> it = keySet.iterator();
-            while (it.hasNext()) {
-                Item item = it.next();
-                sb.append(item.getName()).append(" (x").append(item.quantity).append(")\n");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return sb.toString();
+    public void setTotal(double total) {
+        this.total += total;
     }
+
 }

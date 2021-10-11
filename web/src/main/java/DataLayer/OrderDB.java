@@ -47,7 +47,7 @@ public class OrderDB extends Logic.Order {
      */
     public static Collection getAllCustomerOrders(int customerID) {
         try {
-            Connection con = DBManager.getConnection();
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/lab1", "sqladmin", "truepassword1");
             con.setAutoCommit(false);
             String sqlTOrder = "SELECT * FROM T_ORDERITEMS WHERE ORDERID IN ("
                     + "SELECT ORDERID FROMT T_ORDER WHERE USERID = ?) ORDER BY ORDERID ASC";
@@ -74,7 +74,7 @@ public class OrderDB extends Logic.Order {
         OrderDB order = new OrderDB(orderID, date);
         try {
             //behöver dubbla SQL statements, pga koppling Order - Item
-            Connection con = DBManager.getConnection();
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/lab1", "sqladmin", "truepassword1");
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT 1 FROM T_ORDEROVERVIEW WHERE OrderID = " + orderID);
             while (rs.next()) {
@@ -124,12 +124,12 @@ public class OrderDB extends Logic.Order {
                 String sqlTOrderItems = "INSERT INTO t_orderitems (OrderID, ItemID, Amount) VALUES (?,?,?)";
                 prepStatTOrderItems = con.prepareStatement(sqlTOrderItems);
 
-                for (Map.Entry<ItemInfo, Integer> en : order.contMap.entrySet()) {
+                for (Map.Entry<Integer, Integer> en : order.contMap.entrySet()) {
                     prepStatTOrderItems.setInt(1, orderID);
-                    prepStatTOrderItems.setInt(2, en.getKey().id);
+                    prepStatTOrderItems.setInt(2, en.getKey());
                     prepStatTOrderItems.setInt(3, en.getValue());
                     prepStatTOrderItems.executeUpdate();
-                    System.out.println("Added " + orderID + " " + en.getKey().id);
+                    System.out.println("Added " + orderID + " " + en.getKey());
                 }
                 con.commit();
             } catch (Exception e) {
